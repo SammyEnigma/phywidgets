@@ -36,18 +36,14 @@ INCLUDEPATH += \
     ../../phycoub/shapes/ \
     ../../phycoub/types/
 
+INCLUDEPATH += \
+  ../phycommon/
+
 SOURCES += \
-    GLRotationController.cpp \
-    PhyCoubController.cpp
+    PhyScalarDoubleControllerWidget.cpp
 
 HEADERS += \
-    GLRotationController.h \
-    GLRotationIface.h \
-    GetCoubSizeAdapterIface.h \
-    GetParticlesForGLAdapterIface.h \
-    PhyCoubController.h \
-    PhyCoubControllerSubscriberIface.h \
-    ScalarDoubleControllerAdapterIface.h
+    PhyScalarDoubleControllerWidget.h
 
 # Default rules for deployment.
 unix {
