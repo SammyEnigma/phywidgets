@@ -40,10 +40,13 @@ INCLUDEPATH += \
   ../phycommon/
 
 SOURCES += \
-    PhyScalarDoubleControllerWidget.cpp
+    PhyScalarDoubleControllerWidget.cpp \
+    PhyScalarULongControllerWidget.cpp
 
 HEADERS += \
-    PhyScalarDoubleControllerWidget.h
+    PhyScalarControllerWidgetBase.h \
+    PhyScalarDoubleControllerWidget.h \
+    PhyScalarULongControllerWidget.h
 
 # Default rules for deployment.
 unix {

@@ -1,35 +1,19 @@
 #ifndef PHYSCALARCONTROLLER_H
 #define PHYSCALARCONTROLLER_H
 
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QLineEdit>
-
-#include "ScalarDoubleControllerAdapterIface.h"
+#include "PhyScalarControllerWidgetBase.h"
 
 namespace phywidgets
 {
 
-class PhyScalarDoubleControllerWidget : public QWidget
+class PhyScalarDoubleControllerWidget : public PhyScalarControllerWidgetBase< double >
 {
   public:
-    PhyScalarDoubleControllerWidget( QWidget* parent = nullptr );
-
-    void setScalarController( ScalarDoubleControllerAdapterPtr scalarControllerAdapter );
-    void setScalarValueLabel( const QString& scalarValueLabel );
-
-  private slots:
-    void updateScalarValue( const QString& value );
+    explicit PhyScalarDoubleControllerWidget( QWidget* parent = nullptr );
+    virtual ~PhyScalarDoubleControllerWidget() override = default;
 
   private:
-    void configureScalarVaule();
-
-    ScalarDoubleControllerAdapterPtr scalarConrollerAdapter_ = nullptr;
-
-    QVBoxLayout* scalarLayout_ = nullptr;
-    QLabel* scalarLabel_ = nullptr;
-    QLineEdit* scalarValueEdit_ = nullptr;
+    void setValidator();
 };
 
 } // namespace phywidgets
