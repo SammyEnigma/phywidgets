@@ -11,9 +11,15 @@ PhyCoubControllerSubscriber::PhyCoubControllerSubscriber(
 {
 }
 
+PhyCoubControllerSubscriber::~PhyCoubControllerSubscriber()
+{
+    release();
+}
+
 // virtual override
 void PhyCoubControllerSubscriber::onStart()
 {
+    std::lock_guard< std::mutex > lockGuard( widgetMutex_ );
     if ( widget_ )
     {
         widget_->deltaTimeEdit_->setDisabled( true );
@@ -23,10 +29,17 @@ void PhyCoubControllerSubscriber::onStart()
 // virtual override
 void PhyCoubControllerSubscriber::onStop()
 {
+    std::lock_guard< std::mutex > lockGuard( widgetMutex_ );
     if ( widget_ )
     {
         widget_->deltaTimeEdit_->setDisabled( false );
     }
+}
+
+void PhyCoubControllerSubscriber::release()
+{
+    std::lock_guard< std::mutex > lockGuard( widgetMutex_ );
+    widget_ = nullptr;
 }
 
 } // namespace phywidgets

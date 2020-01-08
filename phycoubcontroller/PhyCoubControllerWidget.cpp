@@ -47,7 +47,12 @@ PhyCoubControllerWidget::PhyCoubControllerWidget( QWidget* parent )
         SLOT( updateExperimentTime() ) );
     updateExperimentTimeTimer_.start( 200 );
 
-    controllerSubscriber = std::make_shared< PhyCoubControllerSubscriber >( this );
+    controllerSubscriber_ = std::make_shared< PhyCoubControllerSubscriber >( this );
+}
+
+PhyCoubControllerWidget::~PhyCoubControllerWidget()
+{
+    controllerSubscriber_->release();
 }
 
 void PhyCoubControllerWidget::setPhyCoubController(
@@ -56,7 +61,7 @@ void PhyCoubControllerWidget::setPhyCoubController(
     phyCoubControllerWeak_ = phyCoubController;
     if ( auto phyCoubController = phyCoubControllerWeak_.lock() )
     {
-        phyCoubController->subscribe( controllerSubscriber );
+        phyCoubController->subscribe( controllerSubscriber_ );
 
         deltaTimeEdit_->setText( QString::number( phyCoubController->getDeltaTime() ) );
         experimentTimeView_->setText(

@@ -1,4 +1,4 @@
-QT += widgets
+QT += core gui opengl widgets
 
 TEMPLATE = lib
 CONFIG += staticlib
@@ -36,17 +36,18 @@ INCLUDEPATH += \
     ../../phycoub/shapes/ \
     ../../phycoub/types/
 
+INCLUDEPATH += \
+  ../phycommon/
+
 SOURCES += \
-    GLRotationController.cpp \
-    PhyCoubController.cpp
+    GLRotationModelAdapter.cpp \
+    ModelViewerGLWidget.cpp \
+    PhyCoubGL.cpp
 
 HEADERS += \
-    GLRotationController.h \
-    GLRotationIface.h \
-    GetCoubSizeAdapterIface.h \
-    GetParticlesForGLAdapterIface.h \
-    PhyCoubController.h \
-    PhyCoubControllerSubscriberIface.h
+    GLRotationModelAdapter.h \
+    ModelViewerGLWidget.h \
+    PhyCoubGL.h
 
 # Default rules for deployment.
 unix {
