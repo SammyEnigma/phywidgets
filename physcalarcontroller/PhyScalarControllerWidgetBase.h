@@ -7,6 +7,7 @@
 #include <QLineEdit>
 
 #include "ScalarControllerAdapterIface.h"
+#include "PhyScalarControllerSubscriber.h"
 
 namespace phywidgets
 {
@@ -28,6 +29,8 @@ class PhyScalarControllerWidgetBase : public QWidget
     void updateScalarValue( const QString& value );
 
   protected:
+    friend class PhyScalarControllerSubscriber< ValueType >;
+
     QVBoxLayout* getLayout();
     QLabel* getLabel();
     QLineEdit* getValueEdit();

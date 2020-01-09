@@ -44,6 +44,7 @@ SOURCES += \
     PhyScalarULongControllerWidget.cpp
 
 HEADERS += \
+    PhyScalarControllerSubscriber.h \
     PhyScalarControllerWidgetBase.h \
     PhyScalarDoubleControllerWidget.h \
     PhyScalarULongControllerWidget.h
