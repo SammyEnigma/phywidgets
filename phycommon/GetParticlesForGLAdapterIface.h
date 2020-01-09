@@ -13,7 +13,7 @@ class GetParticlesForGLAdapterIface
   public:
     virtual ~GetParticlesForGLAdapterIface() = default;
 
-    virtual const phycoub::ParticleGroupList& getParticles() = 0;
+    virtual phycoub::ParticleGroupList getParticles() const = 0;
 };
 
 using GetParticlesForGLAdapterPtr = std::shared_ptr< GetParticlesForGLAdapterIface >;

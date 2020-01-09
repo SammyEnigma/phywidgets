@@ -63,6 +63,8 @@ PhyScalarControllerWidgetBase< ValueType >::PhyScalarControllerWidgetBase(
     , scalarLabel_( new QLabel( this ) )
     , scalarValueEdit_( new QLineEdit( this ) )
     , setScalarValueButton_( new QPushButton( this ) )
+    , controllerSubscriber_(
+          std::make_shared< PhyScalarControllerSubscriber< ValueType > >( this ) )
 {
     configureScalarVaule();
     setLayout( scalarLayout_ );
@@ -125,8 +127,6 @@ void PhyScalarControllerWidgetBase< ValueType >::configureScalarVaule()
     scalarEditLayout_->addWidget( scalarLabel_ );
     scalarEditLayout_->addWidget( scalarValueEdit_ );
 
-    scalarLayout_->addWidget( scalarLabel_ );
-    scalarLayout_->addWidget( scalarValueEdit_ );
     setScalarValueButton_->setText( "Установить" );
 }
 

@@ -51,6 +51,7 @@ void PhyScalarControllerSubscriber< ValueType >::onStart()
     if ( widget_ )
     {
         widget_->scalarValueEdit_->setDisabled( true );
+        widget_->setScalarValueButton_->setDisabled( true );
     }
 }
 
@@ -62,6 +63,7 @@ void PhyScalarControllerSubscriber< ValueType >::onStop()
     if ( widget_ )
     {
         widget_->scalarValueEdit_->setDisabled( false );
+        widget_->setScalarValueButton_->setDisabled( false );
     }
 }
 

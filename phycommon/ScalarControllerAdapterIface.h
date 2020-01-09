@@ -55,7 +55,7 @@ ValueType
 ScalarControllerAdapter< ValueType, Type, getValueMethod, setValueMethod >::getValue()
     const
 {
-    double value = 0.;
+    ValueType value{};
     if ( coub_ )
     {
         value = ( ( *coub_ ).*getValueMethod )();

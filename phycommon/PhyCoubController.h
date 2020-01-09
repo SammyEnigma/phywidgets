@@ -1,20 +1,25 @@
 #ifndef PHYCOUBCONTROLLER_H
 #define PHYCOUBCONTROLLER_H
 
+#include <mutex>
 #include <future>
 #include <memory>
 
 #include "PhyCoub.h"
 #include "PhyCoubControllerSubscriberIface.h"
+#include "GetParticlesForGLAdapterIface.h"
 
 namespace phywidgets
 {
 
-class PhyCoubController final
+class PhyCoubController final : public GetParticlesForGLAdapterIface
 {
   public:
     PhyCoubController( phycoub::PhyCoubPtr coub );
-    ~PhyCoubController();
+    virtual ~PhyCoubController() override;
+
+    // Implementation of GetParticlesForGLAdapterIface
+    virtual phycoub::ParticleGroupList getParticles() const override;
 
     void startCalculation();
     void calculateOnce();
@@ -29,6 +34,9 @@ class PhyCoubController final
     void subscribe( PhyCoubControllerSubscriberPtr subscriber );
 
   private:
+    phycoub::ParticleGroupList particlesForGL_;
+    mutable std::mutex particlesForGLMutex_;
+
     bool isCalculating_ = false;
     std::future< void > calculationThread_;
     phycoub::PhyCoubPtr coub_;

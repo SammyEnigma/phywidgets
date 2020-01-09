@@ -11,7 +11,7 @@ class GetCoubSizeAdapterIface
   public:
     virtual ~GetCoubSizeAdapterIface() = default;
 
-    virtual double getCoubSize() = 0;
+    virtual double getCoubSize() const = 0;
 };
 
 using GetCoubSizeAdapterPtr = std::shared_ptr< GetCoubSizeAdapterIface >;

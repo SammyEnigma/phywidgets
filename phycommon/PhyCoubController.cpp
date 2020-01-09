@@ -13,6 +13,13 @@ PhyCoubController::~PhyCoubController()
     stopCalculation();
 }
 
+// virtual override
+phycoub::ParticleGroupList PhyCoubController::getParticles() const
+{
+    std::lock_guard< std::mutex > lockGuard( particlesForGLMutex_ );
+    return particlesForGL_;
+}
+
 void PhyCoubController::startCalculation()
 {
     if ( !isCalculating_ )
@@ -22,6 +29,10 @@ void PhyCoubController::startCalculation()
             while ( isCalculating_ )
             {
                 coub_->phyCoub();
+                {
+                    std::lock_guard< std::mutex > lockGuard( particlesForGLMutex_ );
+                    particlesForGL_ = coub_->getParticleGroupList().deepCopy();
+                }
             }
         } );
         for ( auto subscriberWeak : subscribers_ )

@@ -58,8 +58,9 @@ void PhyCoubGL::drowParticlesWithColorsByGroup(
 
         for ( ParticlePtr particle : **groupIterator )
         {
+            const Vector& particleCoordinate = particle->getCoordinate();
             const Vector mashtabedOriginCoordinate
-                = mashtabVector( particle->getCoordinate(), coubSize_ ) - origin_;
+                = mashtabVector( particleCoordinate, coubSize_ ) - origin_;
             drowSphere( mashtabedOriginCoordinate, 0.01 );
             /*
                         auto& trajectoryVector = trajectory_[ particle->getId() ];
