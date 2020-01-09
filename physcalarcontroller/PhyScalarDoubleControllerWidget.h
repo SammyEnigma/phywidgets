@@ -8,12 +8,14 @@ namespace phywidgets
 
 class PhyScalarDoubleControllerWidget : public PhyScalarControllerWidgetBase< double >
 {
+    Q_OBJECT
+
   public:
     explicit PhyScalarDoubleControllerWidget( QWidget* parent = nullptr );
     virtual ~PhyScalarDoubleControllerWidget() override = default;
 
-  protected:
-    virtual double toValueType( const QString& string ) override;
+  private slots:
+    void onSetScalarValueClicked();
 
   private:
     void setValidator();

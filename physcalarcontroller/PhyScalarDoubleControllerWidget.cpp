@@ -9,6 +9,18 @@ PhyScalarDoubleControllerWidget::PhyScalarDoubleControllerWidget( QWidget* paren
     : PhyScalarControllerWidgetBase( parent )
 {
     setValidator();
+
+    QObject::connect( setScalarValueButton_, SIGNAL( clicked() ), this,
+        SLOT( onSetScalarValueClicked() ) );
+}
+
+void PhyScalarDoubleControllerWidget::onSetScalarValueClicked()
+{
+    auto scalarConrollerAdapter = getScalarControllerAdapter();
+    if ( scalarConrollerAdapter )
+    {
+        scalarConrollerAdapter->setValue( getValueEdit()->text().toDouble() );
+    }
 }
 
 void PhyScalarDoubleControllerWidget::setValidator()
@@ -18,12 +30,6 @@ void PhyScalarDoubleControllerWidget::setValidator()
 
     auto* valueEdit = getValueEdit();
     valueEdit->setValidator( scalarValidator );
-}
-
-// virtual override
-double PhyScalarDoubleControllerWidget::toValueType( const QString& string )
-{
-    return string.toDouble();
 }
 
 } // namespace phywidgets

@@ -8,12 +8,14 @@ namespace phywidgets
 
 class PhyScalarULongControllerWidget : public PhyScalarControllerWidgetBase< long >
 {
+    Q_OBJECT
+
   public:
     explicit PhyScalarULongControllerWidget( QWidget* parent = nullptr );
     virtual ~PhyScalarULongControllerWidget() override = default;
 
-  protected:
-    virtual long toValueType( const QString& string ) override;
+  private slots:
+    void onSetScalarValueClicked();
 
   private:
     void setValidator();

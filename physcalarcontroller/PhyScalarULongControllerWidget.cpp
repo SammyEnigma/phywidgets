@@ -9,6 +9,18 @@ PhyScalarULongControllerWidget::PhyScalarULongControllerWidget( QWidget* parent 
     : PhyScalarControllerWidgetBase( parent )
 {
     setValidator();
+
+    QObject::connect( setScalarValueButton_, SIGNAL( clicked() ), this,
+        SLOT( onSetScalarValueClicked() ) );
+}
+
+void PhyScalarULongControllerWidget::onSetScalarValueClicked()
+{
+    auto scalarConrollerAdapter = getScalarControllerAdapter();
+    if ( scalarConrollerAdapter )
+    {
+        scalarConrollerAdapter->setValue( getValueEdit()->text().toLong() );
+    }
 }
 
 void PhyScalarULongControllerWidget::setValidator()
@@ -17,12 +29,6 @@ void PhyScalarULongControllerWidget::setValidator()
 
     auto* valueEdit = getValueEdit();
     valueEdit->setValidator( scalarValidator );
-}
-
-// virtual override
-long PhyScalarULongControllerWidget::toValueType( const QString& string )
-{
-    return string.toLong();
 }
 
 } // namespace phywidgets

@@ -29,15 +29,14 @@ class PhyScalarControllerWidgetBase : public QWidget
 
     void setPhyCoubController( PhyCoubControllerPtr phyCoubController );
 
-  private slots:
-    void onSetScalarValueClicked();
-
   protected:
     friend class PhyScalarControllerSubscriber< ValueType >;
 
-    virtual ValueType toValueType( const QString& string ) = 0;
-
     QLineEdit* getValueEdit();
+    QPushButton* getSetValueButton();
+    ScalarTypeControllerAdapterPtr getScalarControllerAdapter();
+
+    QPushButton* setScalarValueButton_ = nullptr;
 
   private:
     void configureScalarVaule();
@@ -51,7 +50,6 @@ class PhyScalarControllerWidgetBase : public QWidget
     QVBoxLayout* scalarEditLayout_ = nullptr;
     QLabel* scalarLabel_ = nullptr;
     QLineEdit* scalarValueEdit_ = nullptr;
-    QPushButton* setScalarValueButton_ = nullptr;
 };
 
 template< typename ValueType >
@@ -68,9 +66,6 @@ PhyScalarControllerWidgetBase< ValueType >::PhyScalarControllerWidgetBase(
 {
     configureScalarVaule();
     setLayout( scalarLayout_ );
-
-    QObject::connect( setScalarValueButton_, SIGNAL( clicked() ), this,
-        SLOT( onSetScalarValueClicked() ) );
 }
 
 template< typename ValueType >
@@ -104,18 +99,22 @@ void PhyScalarControllerWidgetBase< ValueType >::setPhyCoubController(
 }
 
 template< typename ValueType >
-void PhyScalarControllerWidgetBase< ValueType >::onSetScalarValueClicked()
-{
-    if ( scalarConrollerAdapter_ )
-    {
-        scalarConrollerAdapter_->setValue( toValueType( scalarValueEdit_->text() ) );
-    }
-}
-
-template< typename ValueType >
 QLineEdit* PhyScalarControllerWidgetBase< ValueType >::getValueEdit()
 {
     return scalarValueEdit_;
+}
+
+template< typename ValueType >
+QPushButton* PhyScalarControllerWidgetBase< ValueType >::getSetValueButton()
+{
+    return setScalarValueButton_;
+}
+
+template< typename ValueType >
+typename PhyScalarControllerWidgetBase< ValueType >::ScalarTypeControllerAdapterPtr
+PhyScalarControllerWidgetBase< ValueType >::getScalarControllerAdapter()
+{
+    return scalarConrollerAdapter_;
 }
 
 template< typename ValueType >
