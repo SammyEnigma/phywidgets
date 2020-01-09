@@ -193,9 +193,13 @@ void PhyCoubGL::drowCube( const phycoub::Vector& coordinate, double size )
 
 // static
 phycoub::Vector PhyCoubGL::mashtabVector(
-    const phycoub::Vector& coordinate, double mashtab )
+    const phycoub::Vector& coordinate, const phycoub::Vector& mashtab )
 {
-    const phycoub::Vector mashtabedVector = coordinate / mashtab;
+    const phycoub::Vector mashtabedVector = phycoub::Vector{
+        coordinate.x_ / mashtab.x_,
+        coordinate.y_ / mashtab.y_,
+        coordinate.z_ / mashtab.z_,
+    };
     return mashtabedVector;
 }
 

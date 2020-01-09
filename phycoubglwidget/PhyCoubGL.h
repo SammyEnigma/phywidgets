@@ -38,7 +38,7 @@ class PhyCoubGL final
     void drowCube( const phycoub::Vector& coordinate, double size );
 
     static phycoub::Vector mashtabVector(
-        const phycoub::Vector& coordinate, double mashtab );
+        const phycoub::Vector& coordinate, const phycoub::Vector& mashtab );
 
     std::unordered_map< long int, std::list< phycoub::Vector > > trajectory_;
 
@@ -46,7 +46,7 @@ class PhyCoubGL final
     std::weak_ptr< GetParticlesForGLAdapterIface > getParticlesForGLAdapterWeak_;
 
     QGLWidget* gLWidget_ = nullptr;
-    double coubSize_ = .0;
+    phycoub::Vector coubSize_;
 
     static const phycoub::Vector origin_;
     constexpr static std::array< Qt::GlobalColor, 5 > colorsForGroup_

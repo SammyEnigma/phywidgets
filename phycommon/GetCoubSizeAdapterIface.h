@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include "Vector.h"
+
 namespace phywidgets
 {
 
@@ -11,7 +13,7 @@ class GetCoubSizeAdapterIface
   public:
     virtual ~GetCoubSizeAdapterIface() = default;
 
-    virtual double getCoubSize() const = 0;
+    virtual phycoub::Vector getCoubSize() const = 0;
 };
 
 using GetCoubSizeAdapterPtr = std::shared_ptr< GetCoubSizeAdapterIface >;
