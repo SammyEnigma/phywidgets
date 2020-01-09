@@ -19,4 +19,10 @@ void PhyScalarULongControllerWidget::setValidator()
     valueEdit->setValidator( scalarValidator );
 }
 
+// virtual override
+long PhyScalarULongControllerWidget::toValueType( const QString& string )
+{
+    return string.toLong();
+}
+
 } // namespace phywidgets

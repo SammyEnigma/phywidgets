@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QPushButton>
 
 #include "ScalarControllerAdapterIface.h"
 #include "PhyScalarControllerSubscriber.h"
@@ -29,13 +30,13 @@ class PhyScalarControllerWidgetBase : public QWidget
     void setPhyCoubController( PhyCoubControllerPtr phyCoubController );
 
   private slots:
-    void updateScalarValue( const QString& value );
+    void onSetScalarValueClicked();
 
   protected:
     friend class PhyScalarControllerSubscriber< ValueType >;
 
-    QVBoxLayout* getLayout();
-    QLabel* getLabel();
+    virtual ValueType toValueType( const QString& string ) = 0;
+
     QLineEdit* getValueEdit();
 
   private:
@@ -46,24 +47,28 @@ class PhyScalarControllerWidgetBase : public QWidget
     std::shared_ptr< PhyScalarControllerSubscriber< ValueType > > controllerSubscriber_
         = nullptr;
 
-    QVBoxLayout* scalarLayout_ = nullptr;
+    QHBoxLayout* scalarLayout_ = nullptr;
+    QVBoxLayout* scalarEditLayout_ = nullptr;
     QLabel* scalarLabel_ = nullptr;
     QLineEdit* scalarValueEdit_ = nullptr;
+    QPushButton* setScalarValueButton_ = nullptr;
 };
 
 template< typename ValueType >
 PhyScalarControllerWidgetBase< ValueType >::PhyScalarControllerWidgetBase(
     QWidget* parent )
     : QWidget( parent )
-    , scalarLayout_( new QVBoxLayout( this ) )
+    , scalarLayout_( new QHBoxLayout( this ) )
+    , scalarEditLayout_( new QVBoxLayout( this ) )
     , scalarLabel_( new QLabel( this ) )
     , scalarValueEdit_( new QLineEdit( this ) )
+    , setScalarValueButton_( new QPushButton( this ) )
 {
     configureScalarVaule();
     setLayout( scalarLayout_ );
 
-    QObject::connect( scalarValueEdit_, SIGNAL( textChanged( const QString& ) ), this,
-        SLOT( updateScalarValue( const QString& ) ) );
+    QObject::connect( setScalarValueButton_, SIGNAL( clicked() ), this,
+        SLOT( onSetScalarValueClicked() ) );
 }
 
 template< typename ValueType >
@@ -97,24 +102,12 @@ void PhyScalarControllerWidgetBase< ValueType >::setPhyCoubController(
 }
 
 template< typename ValueType >
-void PhyScalarControllerWidgetBase< ValueType >::updateScalarValue( const QString& value )
+void PhyScalarControllerWidgetBase< ValueType >::onSetScalarValueClicked()
 {
     if ( scalarConrollerAdapter_ )
     {
-        scalarConrollerAdapter_->setValue( value.toDouble() );
+        scalarConrollerAdapter_->setValue( toValueType( scalarValueEdit_->text() ) );
     }
-}
-
-template< typename ValueType >
-QVBoxLayout* PhyScalarControllerWidgetBase< ValueType >::getLayout()
-{
-    return scalarLayout_;
-}
-
-template< typename ValueType >
-QLabel* PhyScalarControllerWidgetBase< ValueType >::getLabel()
-{
-    return scalarLabel_;
 }
 
 template< typename ValueType >
@@ -126,9 +119,15 @@ QLineEdit* PhyScalarControllerWidgetBase< ValueType >::getValueEdit()
 template< typename ValueType >
 void PhyScalarControllerWidgetBase< ValueType >::configureScalarVaule()
 {
-    scalarValueEdit_->setText( "0" );
+    scalarLayout_->addLayout( scalarEditLayout_ );
+    scalarLayout_->addWidget( setScalarValueButton_ );
+
+    scalarEditLayout_->addWidget( scalarLabel_ );
+    scalarEditLayout_->addWidget( scalarValueEdit_ );
+
     scalarLayout_->addWidget( scalarLabel_ );
     scalarLayout_->addWidget( scalarValueEdit_ );
+    setScalarValueButton_->setText( "Установить" );
 }
 
 } // namespace phywidgets

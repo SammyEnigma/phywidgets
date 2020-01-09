@@ -20,4 +20,10 @@ void PhyScalarDoubleControllerWidget::setValidator()
     valueEdit->setValidator( scalarValidator );
 }
 
+// virtual override
+double PhyScalarDoubleControllerWidget::toValueType( const QString& string )
+{
+    return string.toDouble();
+}
+
 } // namespace phywidgets

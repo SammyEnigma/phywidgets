@@ -12,6 +12,9 @@ class PhyScalarDoubleControllerWidget : public PhyScalarControllerWidgetBase< do
     explicit PhyScalarDoubleControllerWidget( QWidget* parent = nullptr );
     virtual ~PhyScalarDoubleControllerWidget() override = default;
 
+  protected:
+    virtual double toValueType( const QString& string ) override;
+
   private:
     void setValidator();
 };

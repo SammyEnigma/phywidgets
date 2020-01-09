@@ -12,6 +12,9 @@ class PhyScalarULongControllerWidget : public PhyScalarControllerWidgetBase< lon
     explicit PhyScalarULongControllerWidget( QWidget* parent = nullptr );
     virtual ~PhyScalarULongControllerWidget() override = default;
 
+  protected:
+    virtual long toValueType( const QString& string ) override;
+
   private:
     void setValidator();
 };
