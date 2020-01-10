@@ -31,6 +31,8 @@ INCLUDEPATH += \
     ../../phycoub/phycoubs/ \
     ../../phycoub/phymeasurement/ \
     ../../phycoub/phyobjects/ \
+    ../../phycoub/phyobjects/fieldcreators/ \
+    ../../phycoub/phyobjects/intercommunications/ \
     ../../phycoub/specialmodellingfunctions/ \
     ../../phycoub/src/ \
     ../../phycoub/shapes/ \
