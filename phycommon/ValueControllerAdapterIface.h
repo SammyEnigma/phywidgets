@@ -7,32 +7,31 @@ namespace phywidgets
 {
 
 template< typename ValueType >
-class ScalarControllerAdapterIface
+class ValueControllerAdapterIface
 {
   public:
-    virtual ~ScalarControllerAdapterIface() = default;
+    virtual ~ValueControllerAdapterIface() = default;
 
     virtual ValueType getValue() const = 0;
     virtual void setValue( ValueType value ) = 0;
 };
 
-using ScalarDoubleControllerAdapterPtr
-    = std::shared_ptr< ScalarControllerAdapterIface< double > >;
+using DoubleControllerAdapterPtr
+    = std::shared_ptr< ValueControllerAdapterIface< double > >;
 
-using ScalarLongControllerAdapterPtr
-    = std::shared_ptr< ScalarControllerAdapterIface< long > >;
+using LongControllerAdapterPtr = std::shared_ptr< ValueControllerAdapterIface< long > >;
 
 template< typename ValueType, typename Type, ValueType ( Type::*getValueMethod )() const,
     void ( Type::*setValueMethod )( ValueType ) >
-class ScalarControllerAdapter : public ScalarControllerAdapterIface< ValueType >
+class ValueControllerAdapter : public ValueControllerAdapterIface< ValueType >
 {
   public:
     using TypePtr = std::shared_ptr< Type >;
 
-    ScalarControllerAdapter( TypePtr coub );
-    virtual ~ScalarControllerAdapter() override = default;
+    ValueControllerAdapter( TypePtr coub );
+    virtual ~ValueControllerAdapter() override = default;
 
-    // Implementation of ScalarDoubleControllerAdapterIface
+    // Implementation of ScalarValueControllerAdapterIface
     virtual ValueType getValue() const override;
     virtual void setValue( ValueType value ) override;
 
@@ -42,8 +41,8 @@ class ScalarControllerAdapter : public ScalarControllerAdapterIface< ValueType >
 
 template< typename ValueType, typename Type, ValueType ( Type::*getValueMethod )() const,
     void ( Type::*setValueMethod )( ValueType ) >
-ScalarControllerAdapter< ValueType, Type, getValueMethod,
-    setValueMethod >::ScalarControllerAdapter( TypePtr coub )
+ValueControllerAdapter< ValueType, Type, getValueMethod,
+    setValueMethod >::ValueControllerAdapter( TypePtr coub )
     : coub_( coub )
 {
 }
@@ -52,7 +51,7 @@ ScalarControllerAdapter< ValueType, Type, getValueMethod,
 template< typename ValueType, typename Type, ValueType ( Type::*getValueMethod )() const,
     void ( Type::*setValueMethod )( ValueType ) >
 ValueType
-ScalarControllerAdapter< ValueType, Type, getValueMethod, setValueMethod >::getValue()
+ValueControllerAdapter< ValueType, Type, getValueMethod, setValueMethod >::getValue()
     const
 {
     ValueType value{};
@@ -66,7 +65,7 @@ ScalarControllerAdapter< ValueType, Type, getValueMethod, setValueMethod >::getV
 // virtual override
 template< typename ValueType, typename Type, ValueType ( Type::*getValueMethod )() const,
     void ( Type::*setValueMethod )( ValueType ) >
-void ScalarControllerAdapter< ValueType, Type, getValueMethod, setValueMethod >::setValue(
+void ValueControllerAdapter< ValueType, Type, getValueMethod, setValueMethod >::setValue(
     ValueType value )
 {
     if ( coub_ )

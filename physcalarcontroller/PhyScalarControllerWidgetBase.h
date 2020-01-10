@@ -7,7 +7,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 
-#include "ScalarControllerAdapterIface.h"
+#include "ValueControllerAdapterIface.h"
 #include "PhyScalarControllerSubscriber.h"
 #include "PhyCoubController.h"
 
@@ -22,7 +22,7 @@ class PhyScalarControllerWidgetBase : public QWidget
     virtual ~PhyScalarControllerWidgetBase() = default;
 
     using ScalarTypeControllerAdapterPtr
-        = std::shared_ptr< ScalarControllerAdapterIface< ValueType > >;
+        = std::shared_ptr< ValueControllerAdapterIface< ValueType > >;
 
     void setScalarController( ScalarTypeControllerAdapterPtr scalarControllerAdapter );
     void setScalarValueLabel( const QString& scalarValueLabel );

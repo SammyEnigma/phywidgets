@@ -49,7 +49,7 @@ HEADERS += \
     GetParticlesForGLAdapterIface.h \
     PhyCoubController.h \
     PhyCoubControllerSubscriberIface.h \
-    ScalarControllerAdapterIface.h
+    ValueControllerAdapterIface.h
 
 # Default rules for deployment.
 unix {
