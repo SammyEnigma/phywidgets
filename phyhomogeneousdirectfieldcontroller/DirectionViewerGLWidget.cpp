@@ -1,0 +1,229 @@
+#include <QOpenGLFunctions>
+#include <QGL>
+#include <GL/glu.h>
+#include <QMouseEvent>
+
+#include "DirectionViewerGLWidget.h"
+
+namespace phywidgets
+{
+
+// static
+const phycoub::Vector DirectionViewerGLWidget::origin_ = phycoub::Vector{ 0.5, 0.5, 0.5 };
+
+DirectionViewerGLWidget::DirectionViewerGLWidget( QWidget* parent /* = nullptr */ )
+    : QGLWidget( parent )
+{
+    setMinimumSize( 100, 100 );
+
+    gLRotationDirectionViewAdapter_
+        = std::make_shared< GLRotationDirectionViewAdapter >( this );
+
+    QObject::connect( &timerPlot_, SIGNAL( timeout() ), this, SLOT( updateGL() ) );
+    timerPlot_.start( 200 );
+}
+
+// virtual override
+void DirectionViewerGLWidget::updateGlRotation( int xRot, int yRot, int zRot )
+{
+    xRot_ = xRot;
+    yRot_ = yRot;
+    zRot_ = zRot;
+
+    updateGL();
+}
+
+void DirectionViewerGLWidget::setGLRotattionController(
+    GLRotationControllerPtr gLRotationController )
+{
+    gLRotationController_ = gLRotationController;
+    if ( gLRotationController_ )
+    {
+        gLRotationController_->subscribeForUpdates( gLRotationDirectionViewAdapter_ );
+    }
+}
+
+void DirectionViewerGLWidget::setDirectionController(
+    VectorControllerAdapterPtr directionController )
+{
+    directionController_ = directionController;
+    updateGL();
+}
+
+void DirectionViewerGLWidget::setXRotation( int angle )
+{
+    if ( gLRotationController_ )
+    {
+        gLRotationController_->updateRotationX( angle );
+    }
+}
+
+void DirectionViewerGLWidget::setYRotation( int angle )
+{
+    if ( gLRotationController_ )
+    {
+        gLRotationController_->updateRotationY( angle );
+    }
+}
+
+void DirectionViewerGLWidget::setZRotation( int angle )
+{
+    if ( gLRotationController_ )
+    {
+        gLRotationController_->updateRotationZ( angle );
+    }
+}
+
+// virtual override
+void DirectionViewerGLWidget::initializeGL()
+{
+    qglClearColor( Qt::black );
+}
+
+// virtual override
+void DirectionViewerGLWidget::resizeGL( int width, int height )
+{
+    int side = qMin( width, height );
+    glViewport( ( width - side ) / 2, ( height - side ) / 2, side, side );
+
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+#ifdef QT_OPENGL_ES_1
+    glOrthof( -0.5, +0.5, -0.5, +0.5, 4.0, 15.0 );
+#else
+    glOrtho( -0.5, +0.5, -0.5, +0.5, 4.0, 15.0 );
+#endif
+    glMatrixMode( GL_MODELVIEW );
+}
+
+// virtual override
+void DirectionViewerGLWidget::paintGL()
+{
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    glLoadIdentity();
+    glTranslatef( 0.0, 0.0, -10.0 );
+
+    glScaled( zoomScale_, zoomScale_, zoomScale_ );
+
+    glRotatef( static_cast< float >( xRot_ / 16.0 ), 1.0, 0.0, 0.0 );
+    glRotatef( static_cast< float >( yRot_ / 16.0 ), 0.0, 1.0, 0.0 );
+    glRotatef( static_cast< float >( zRot_ / 16.0 ), 0.0, 0.0, 1.0 );
+
+    drowCoordinateSystem();
+    drowDirectionVector();
+}
+
+// virtual override
+void DirectionViewerGLWidget::mousePressEvent( QMouseEvent* event )
+{
+    lastPos_ = event->pos();
+}
+
+// virtual override
+void DirectionViewerGLWidget::mouseMoveEvent( QMouseEvent* event )
+{
+    int dx = event->x() - lastPos_.x();
+    int dy = event->y() - lastPos_.y();
+
+    if ( event->buttons() & Qt::LeftButton )
+    {
+        setXRotation( xRot_ + 8 * dy );
+        setYRotation( yRot_ + 8 * dx );
+    }
+    else if ( event->buttons() & Qt::RightButton )
+    {
+        setXRotation( xRot_ + 8 * dy );
+        setZRotation( zRot_ + 8 * dx );
+    }
+    lastPos_ = event->pos();
+}
+
+void DirectionViewerGLWidget::drowCoordinateSystem()
+{
+    static const phycoub::Vector xVector = phycoub::Vector{ 1., 0., 0. };
+    static const phycoub::Vector yVector = phycoub::Vector{ 0., 1., 0. };
+    static const phycoub::Vector zVector = phycoub::Vector{ 0., 0., 1. };
+
+    phycoub::Vector startOrdinate;
+
+    glLineWidth( 2.0f );
+    glBegin( GL_LINES );
+
+    // ось x
+    startOrdinate = xVector * -1;
+
+    qglColor( Qt::green );
+    glVertex3f( static_cast< float >( startOrdinate.x_ ),
+        static_cast< float >( startOrdinate.y_ ),
+        static_cast< float >( startOrdinate.z_ ) );
+    glVertex3f( static_cast< float >( xVector.x_ ), static_cast< float >( xVector.y_ ),
+        static_cast< float >( xVector.z_ ) );
+
+    // ось y
+    startOrdinate = yVector * -1;
+
+    qglColor( Qt::blue );
+    glVertex3f( static_cast< float >( startOrdinate.x_ ),
+        static_cast< float >( startOrdinate.y_ ),
+        static_cast< float >( startOrdinate.z_ ) );
+    glVertex3f( static_cast< float >( yVector.x_ ), static_cast< float >( yVector.y_ ),
+        static_cast< float >( yVector.z_ ) );
+
+    // ось z
+    startOrdinate = zVector * -1;
+
+    qglColor( Qt::red );
+    glVertex3f( static_cast< float >( startOrdinate.x_ ),
+        static_cast< float >( startOrdinate.y_ ),
+        static_cast< float >( startOrdinate.z_ ) );
+    glVertex3f( static_cast< float >( zVector.x_ ), static_cast< float >( zVector.y_ ),
+        static_cast< float >( zVector.z_ ) );
+
+    glEnd();
+
+    qglColor( Qt::green );
+    drowSphere( xVector, 0.03 );
+
+    qglColor( Qt::blue );
+    drowSphere( yVector, 0.03 );
+
+    qglColor( Qt::red );
+    drowSphere( zVector, 0.03 );
+}
+
+void DirectionViewerGLWidget::drowDirectionVector()
+{
+    if ( directionController_ )
+    {
+        const phycoub::Vector direction = directionController_->getValue();
+
+        glLineWidth( 2.0f );
+        glBegin( GL_LINES );
+
+        qglColor( Qt::cyan );
+        glVertex3f( .0f, .0f, .0f );
+        glVertex3f( static_cast< float >( direction.x_ ),
+            static_cast< float >( direction.y_ ), static_cast< float >( direction.z_ ) );
+
+        glEnd();
+
+        drowSphere( direction, 0.03 );
+    }
+}
+
+void DirectionViewerGLWidget::drowSphere(
+    const phycoub::Vector& coordinate, double radius )
+{
+    glPushMatrix();
+    glScalef( 1, 1, 1 );
+    GLUquadricObj* quadric = gluNewQuadric();
+    gluQuadricNormals( quadric, GLU_SMOOTH );
+    gluQuadricDrawStyle( quadric, GLU_LINE );
+    glTranslatef( static_cast< float >( coordinate.x_ ),
+        static_cast< float >( coordinate.y_ ), static_cast< float >( coordinate.z_ ) );
+    gluSphere( quadric, radius, 36, 36 );
+    gluDeleteQuadric( quadric );
+    glPopMatrix();
+}
+
+} // namespace phywidgets
