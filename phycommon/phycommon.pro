@@ -47,7 +47,7 @@ HEADERS += \
     GLRotationController.h \
     GLRotationIface.h \
     GetCoubSizeAdapterIface.h \
-    GetParticlesForGLAdapterIface.h \
+    GetParticlesAdapterIface.h \
     ParticleRemoveControllerAdapterIface.h \
     PhyCoubController.h \
     PhyCoubControllerSubscriberIface.h \

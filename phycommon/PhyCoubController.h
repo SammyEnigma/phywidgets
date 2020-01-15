@@ -7,12 +7,12 @@
 
 #include "PhyCoub.h"
 #include "PhyCoubControllerSubscriberIface.h"
-#include "GetParticlesForGLAdapterIface.h"
+#include "GetParticlesAdapterIface.h"
 
 namespace phywidgets
 {
 
-class PhyCoubController final : public GetParticlesForGLAdapterIface
+class PhyCoubController final : public GetParticlesAdapterIface
 {
   public:
     PhyCoubController( phycoub::PhyCoubPtr coub );

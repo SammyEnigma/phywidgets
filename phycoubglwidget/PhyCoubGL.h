@@ -9,7 +9,7 @@
 #include <QTableWidget>
 
 #include "GetCoubSizeAdapterIface.h"
-#include "GetParticlesForGLAdapterIface.h"
+#include "GetParticlesAdapterIface.h"
 #include "Vector.h"
 #include "ParticleGroup.h"
 
@@ -24,7 +24,7 @@ class PhyCoubGL final
 
     void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
     void setGetParticleForGLAdapter(
-        GetParticlesForGLAdapterPtr getParticlesForGLAdapter );
+        GetParticlesAdapterPtr getParticlesForGLAdapter );
     void updateScene();
 
   private:
@@ -43,7 +43,7 @@ class PhyCoubGL final
     std::unordered_map< long int, std::list< phycoub::Vector > > trajectory_;
 
     std::weak_ptr< GetCoubSizeAdapterIface > getCoubSizeAdapterWeak_;
-    std::weak_ptr< GetParticlesForGLAdapterIface > getParticlesForGLAdapterWeak_;
+    std::weak_ptr< GetParticlesAdapterIface > getParticlesForGLAdapterWeak_;
 
     QGLWidget* gLWidget_ = nullptr;
     phycoub::Vector coubSize_;

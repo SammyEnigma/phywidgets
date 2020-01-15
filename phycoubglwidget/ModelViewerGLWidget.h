@@ -24,7 +24,7 @@ class ModelViewerGLWidget final
 
     void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
     void setGetParticleForGLAdapter(
-        GetParticlesForGLAdapterPtr getParticlesForGLAdapter );
+        GetParticlesAdapterPtr getParticlesForGLAdapter );
     void setGLRotationController( GLRotationControllerPtr gLRotationController );
 
   public slots:

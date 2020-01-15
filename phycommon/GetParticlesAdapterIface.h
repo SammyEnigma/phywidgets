@@ -8,15 +8,15 @@
 namespace phywidgets
 {
 
-class GetParticlesForGLAdapterIface
+class GetParticlesAdapterIface
 {
   public:
-    virtual ~GetParticlesForGLAdapterIface() = default;
+    virtual ~GetParticlesAdapterIface() = default;
 
     virtual phycoub::ParticleGroupList getParticles() const = 0;
 };
 
-using GetParticlesForGLAdapterPtr = std::shared_ptr< GetParticlesForGLAdapterIface >;
+using GetParticlesAdapterPtr = std::shared_ptr< GetParticlesAdapterIface >;
 
 } // namespace phywidgets
 

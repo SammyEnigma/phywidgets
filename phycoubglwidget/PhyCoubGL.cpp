@@ -23,7 +23,7 @@ void PhyCoubGL::setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter 
 }
 
 void PhyCoubGL::setGetParticleForGLAdapter(
-    GetParticlesForGLAdapterPtr getParticlesForGLAdapter )
+    GetParticlesAdapterPtr getParticlesForGLAdapter )
 {
     getParticlesForGLAdapterWeak_ = getParticlesForGLAdapter;
 }

@@ -9,7 +9,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 
-#include "GetParticlesForGLAdapterIface.h"
+#include "GetParticlesAdapterIface.h"
 #include "GetCoubSizeAdapterIface.h"
 
 namespace phywidgets
@@ -21,7 +21,7 @@ class PhyViewParticleTableWidget : public QWidget
   public:
     explicit PhyViewParticleTableWidget( QWidget* parent = nullptr );
 
-    void setGetParticleAdapter( GetParticlesForGLAdapterPtr getParticlesForGLAdapter );
+    void setGetParticleAdapter( GetParticlesAdapterPtr getParticlesForGLAdapter );
     void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
 
   private slots:
@@ -30,7 +30,7 @@ class PhyViewParticleTableWidget : public QWidget
   private:
     void initializeTableWidget();
 
-    GetParticlesForGLAdapterPtr getParticlesForGLAdapter_ = nullptr;
+    GetParticlesAdapterPtr getParticlesForGLAdapter_ = nullptr;
     GetCoubSizeAdapterPtr getCoubSizeAdapter_ = nullptr;
 
     QTimer timerPlot_;

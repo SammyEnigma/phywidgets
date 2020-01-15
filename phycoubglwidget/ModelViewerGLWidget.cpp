@@ -33,7 +33,7 @@ void ModelViewerGLWidget::setGetCoubSizeAdapter(
 }
 
 void ModelViewerGLWidget::setGetParticleForGLAdapter(
-    GetParticlesForGLAdapterPtr getParticlesForGLAdapter )
+    GetParticlesAdapterPtr getParticlesForGLAdapter )
 {
     phyCoubGL.setGetParticleForGLAdapter( getParticlesForGLAdapter );
     updateGL();

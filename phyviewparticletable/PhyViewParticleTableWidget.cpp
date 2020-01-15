@@ -22,7 +22,7 @@ PhyViewParticleTableWidget::PhyViewParticleTableWidget( QWidget* parent /* = nul
 }
 
 void PhyViewParticleTableWidget::setGetParticleAdapter(
-    GetParticlesForGLAdapterPtr getParticlesForGLAdapter )
+    GetParticlesAdapterPtr getParticlesForGLAdapter )
 {
     getParticlesForGLAdapter_ = getParticlesForGLAdapter;
 }
