@@ -9,6 +9,7 @@
 #include "GLRotationModelAdapter.h"
 #include "ValueControllerAdapterIface.h"
 #include "PhyCoubGlScalarControllerAdapters.h"
+#include "PhyCoubControllerSubscriberIface.h"
 
 namespace phywidgets
 {
@@ -29,6 +30,7 @@ class ModelViewerGLWidget final
     void setGLRotationController( GLRotationControllerPtr gLRotationController );
 
     BoolControllerAdapterWeakPtr getTrajectoryControllerAdapter();
+    PhyCoubControllerSubscriberWeakPtr getPhyCoubController();
 
   public slots:
     void setXRotation( int angle );

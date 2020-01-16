@@ -56,6 +56,11 @@ BoolControllerAdapterWeakPtr ModelViewerGLWidget::getTrajectoryControllerAdapter
     return trajectoryControllerAdapter_;
 }
 
+PhyCoubControllerSubscriberWeakPtr ModelViewerGLWidget::getPhyCoubController()
+{
+    return phyCoubGL_;
+}
+
 void ModelViewerGLWidget::setXRotation( int angle )
 {
     if ( gLRotationController_ )

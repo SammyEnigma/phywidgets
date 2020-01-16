@@ -18,6 +18,18 @@ PhyCoubGL::PhyCoubGL( QGLWidget* gLWidget )
 {
 }
 
+// virtual override
+void PhyCoubGL::onStart()
+{
+    updateTrajectoryFlag_ = true;
+}
+
+// virtual override
+void PhyCoubGL::onStop()
+{
+    updateTrajectoryFlag_ = false;
+}
+
 void PhyCoubGL::setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter )
 {
     getCoubSizeAdapterWeak_ = getCoubSizeAdapter;
@@ -91,11 +103,14 @@ void PhyCoubGL::drowParticlesWithColorsByGroup(
             {
                 trajectoryParticleIdList.extract( particle->getId() );
 
-                auto& trajectoryVector = trajectory_[ particle->getId() ];
-                trajectoryVector.push_back( mashtabedOriginCoordinate );
-                if ( trajectoryVector.size() > 100 )
+                if ( updateTrajectoryFlag_ )
                 {
-                    trajectoryVector.pop_front();
+                    auto& trajectoryVector = trajectory_[ particle->getId() ];
+                    trajectoryVector.push_back( mashtabedOriginCoordinate );
+                    if ( trajectoryVector.size() > 100 )
+                    {
+                        trajectoryVector.pop_front();
+                    }
                 }
             }
         }

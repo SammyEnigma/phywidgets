@@ -11,6 +11,7 @@
 
 #include "GetCoubSizeAdapterIface.h"
 #include "GetParticlesAdapterIface.h"
+#include "PhyCoubControllerSubscriberIface.h"
 #include "Vector.h"
 #include "ParticleGroup.h"
 #include "HasId.h"
@@ -20,11 +21,15 @@ namespace phywidgets
 
 using namespace phycoub;
 
-class PhyCoubGL final
+class PhyCoubGL final : public PhyCoubControllerSubscriberIface
 {
   public:
     PhyCoubGL( QGLWidget* gLWidget );
-    ~PhyCoubGL() = default;
+    virtual ~PhyCoubGL() override = default;
+
+    // Implementation of PhyCoubControllerSubscriberIface
+    virtual void onStart() override;
+    virtual void onStop() override;
 
     void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
     void setGetParticleForGLAdapter( GetParticlesAdapterPtr getParticlesAdapter );
@@ -45,6 +50,7 @@ class PhyCoubGL final
     static Vector mashtabVector( const Vector& coordinate, const Vector& mashtab );
 
     bool drowTrajectoryFlag_ = false;
+    bool updateTrajectoryFlag_ = false;
     std::unordered_map< IDType, std::list< Vector > > trajectory_;
 
     std::weak_ptr< GetCoubSizeAdapterIface > getCoubSizeAdapterWeak_;
