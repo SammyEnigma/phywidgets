@@ -42,16 +42,16 @@ void PhyHomogeneousDirectFieldControllerWidget::setGLRotattionController(
 }
 
 void PhyHomogeneousDirectFieldControllerWidget::setDirectionController(
-    VectorControllerAdapterPtr directionController )
+    VectorControllerAdapterWeakPtr directionControllerWeak )
 {
-    directionViewerGLWidget_->setDirectionController( directionController );
-    homogeneousFieldControllerWidget_->setDirectionController( directionController );
+    directionViewerGLWidget_->setDirectionController( directionControllerWeak );
+    homogeneousFieldControllerWidget_->setDirectionController( directionControllerWeak );
 }
 
 void PhyHomogeneousDirectFieldControllerWidget::setScalarController(
-    DoubleControllerAdapterPtr scalarController )
+    DoubleControllerAdapterWeakPtr scalarControllerWeak )
 {
-    homogeneousFieldControllerWidget_->setScalarController( scalarController );
+    homogeneousFieldControllerWidget_->setScalarController( scalarControllerWeak );
 }
 
 void PhyHomogeneousDirectFieldControllerWidget::setHeader( const QString& header )

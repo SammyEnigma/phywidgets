@@ -17,8 +17,8 @@ class HomogeneousFieldControllerWidget : public QWidget
   public:
     explicit HomogeneousFieldControllerWidget( QWidget* parent = nullptr );
 
-    void setDirectionController( VectorControllerAdapterPtr directionController );
-    void setScalarController( DoubleControllerAdapterPtr scalarController );
+    void setDirectionController( VectorControllerAdapterWeakPtr directionControllerWeak );
+    void setScalarController( DoubleControllerAdapterWeakPtr scalarControllerWeak );
 
     void setScalarValueLabel( const QString& scalarValueLabel );
 
@@ -38,8 +38,8 @@ class HomogeneousFieldControllerWidget : public QWidget
     QLineEdit* scalarValueEdit_ = nullptr;
     DirectionControllerWidget* directionControllerWidget_ = nullptr;
 
-    VectorControllerAdapterPtr directionController_ = nullptr;
-    DoubleControllerAdapterPtr scalarController_ = nullptr;
+    VectorControllerAdapterWeakPtr directionControllerWeak_;
+    DoubleControllerAdapterWeakPtr scalarControllerWeak_;
 };
 
 } // namespace phywidgets

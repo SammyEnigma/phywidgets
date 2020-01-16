@@ -18,13 +18,13 @@ class ValueControllerAdapterIface
     virtual void setValue( ValueType value ) = 0;
 };
 
-using DoubleControllerAdapterPtr
-    = std::shared_ptr< ValueControllerAdapterIface< double > >;
+using DoubleControllerAdapterWeakPtr
+    = std::weak_ptr< ValueControllerAdapterIface< double > >;
 
-using LongControllerAdapterPtr = std::shared_ptr< ValueControllerAdapterIface< long > >;
+using LongControllerAdapterWeakPtr = std::weak_ptr< ValueControllerAdapterIface< long > >;
 
-using VectorControllerAdapterPtr
-    = std::shared_ptr< ValueControllerAdapterIface< phycoub::Vector > >;
+using VectorControllerAdapterWeakPtr
+    = std::weak_ptr< ValueControllerAdapterIface< phycoub::Vector > >;
 
 template< typename ValueType, typename Type, ValueType ( Type::*getValueMethod )() const,
     void ( Type::*setValueMethod )( ValueType ) >

@@ -18,8 +18,8 @@ class PhyHomogeneousDirectFieldControllerWidget : public QWidget
 
     void setGLRotattionController( GLRotationControllerPtr gLRotationController );
 
-    void setDirectionController( VectorControllerAdapterPtr directionController );
-    void setScalarController( DoubleControllerAdapterPtr scalarController );
+    void setDirectionController( VectorControllerAdapterWeakPtr directionControllerWeak );
+    void setScalarController( DoubleControllerAdapterWeakPtr scalarControllerWeak );
 
     void setHeader( const QString& header );
     void setScalarValueLabel( const QString& scalarValueLabel );

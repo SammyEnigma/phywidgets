@@ -21,10 +21,11 @@ class PhyScalarControllerWidgetBase : public QWidget
     explicit PhyScalarControllerWidgetBase( QWidget* parent = nullptr );
     virtual ~PhyScalarControllerWidgetBase();
 
-    using ScalarTypeControllerAdapterPtr
-        = std::shared_ptr< ValueControllerAdapterIface< ValueType > >;
+    using ScalarTypeControllerAdapterWeakPtr
+        = std::weak_ptr< ValueControllerAdapterIface< ValueType > >;
 
-    void setScalarController( ScalarTypeControllerAdapterPtr scalarControllerAdapter );
+    void setScalarController(
+        ScalarTypeControllerAdapterWeakPtr scalarControllerAdapterWeak );
     void setScalarValueLabel( const QString& scalarValueLabel );
 
     void setPhyCoubController( PhyCoubControllerPtr phyCoubController );
@@ -34,13 +35,13 @@ class PhyScalarControllerWidgetBase : public QWidget
 
     QLineEdit* getValueEdit();
     QPushButton* getSetValueButton();
-    ScalarTypeControllerAdapterPtr getScalarControllerAdapter();
+    ScalarTypeControllerAdapterWeakPtr getScalarControllerAdapter();
 
     QPushButton* setScalarValueButton_ = nullptr;
 
   private:
     void configureScalarVaule();
-    ScalarTypeControllerAdapterPtr scalarConrollerAdapter_ = nullptr;
+    ScalarTypeControllerAdapterWeakPtr scalarConrollerAdapterWeak_;
 
     std::weak_ptr< PhyCoubController > phyCoubControllerWeak_;
     PhyScalarPhyCoubControllerSubscriberPtr< ValueType > controllerSubscriber_ = nullptr;
@@ -75,13 +76,13 @@ PhyScalarControllerWidgetBase< ValueType >::~PhyScalarControllerWidgetBase()
 
 template< typename ValueType >
 void PhyScalarControllerWidgetBase< ValueType >::setScalarController(
-    ScalarTypeControllerAdapterPtr scalarConrollerAdapter )
+    ScalarTypeControllerAdapterWeakPtr scalarConrollerAdapterWeak )
 {
-    scalarConrollerAdapter_ = scalarConrollerAdapter;
-    if ( scalarConrollerAdapter_ )
+    scalarConrollerAdapterWeak_ = scalarConrollerAdapterWeak;
+    if ( auto scalarConrollerAdapter = scalarConrollerAdapterWeak_.lock() )
     {
         scalarValueEdit_->setText(
-            QString::number( scalarConrollerAdapter_->getValue() ) );
+            QString::number( scalarConrollerAdapter->getValue() ) );
     }
 }
 
@@ -116,10 +117,10 @@ QPushButton* PhyScalarControllerWidgetBase< ValueType >::getSetValueButton()
 }
 
 template< typename ValueType >
-typename PhyScalarControllerWidgetBase< ValueType >::ScalarTypeControllerAdapterPtr
+typename PhyScalarControllerWidgetBase< ValueType >::ScalarTypeControllerAdapterWeakPtr
 PhyScalarControllerWidgetBase< ValueType >::getScalarControllerAdapter()
 {
-    return scalarConrollerAdapter_;
+    return scalarConrollerAdapterWeak_;
 }
 
 template< typename ValueType >

@@ -28,19 +28,19 @@ HomogeneousFieldControllerWidget::HomogeneousFieldControllerWidget( QWidget* par
 
 // virtual override
 void HomogeneousFieldControllerWidget::setDirectionController(
-    VectorControllerAdapterPtr directionController )
+    VectorControllerAdapterWeakPtr directionControllerWeak )
 {
-    directionControllerWidget_->setDirectionController( directionController );
+    directionControllerWidget_->setDirectionController( directionControllerWeak );
 }
 
 // virtual override
 void HomogeneousFieldControllerWidget::setScalarController(
-    DoubleControllerAdapterPtr scalarController )
+    DoubleControllerAdapterWeakPtr scalarControllerWeak )
 {
-    scalarController_ = scalarController;
-    if ( scalarController_ )
+    scalarControllerWeak_ = scalarControllerWeak;
+    if ( auto scalarController = scalarControllerWeak_.lock() )
     {
-        scalarValueEdit_->setText( QString::number( scalarController_->getValue() ) );
+        scalarValueEdit_->setText( QString::number( scalarController->getValue() ) );
     }
 }
 
@@ -52,9 +52,9 @@ void HomogeneousFieldControllerWidget::setScalarValueLabel(
 
 void HomogeneousFieldControllerWidget::updateScalarValue( const QString& value )
 {
-    if ( scalarController_ )
+    if ( auto scalarController = scalarControllerWeak_.lock() )
     {
-        scalarController_->setValue( value.toDouble() );
+        scalarController->setValue( value.toDouble() );
     }
 }
 

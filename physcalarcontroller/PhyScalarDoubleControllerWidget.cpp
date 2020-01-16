@@ -16,8 +16,8 @@ PhyScalarDoubleControllerWidget::PhyScalarDoubleControllerWidget( QWidget* paren
 
 void PhyScalarDoubleControllerWidget::onSetScalarValueClicked()
 {
-    auto scalarConrollerAdapter = getScalarControllerAdapter();
-    if ( scalarConrollerAdapter )
+
+    if ( auto scalarConrollerAdapter = getScalarControllerAdapter().lock() )
     {
         scalarConrollerAdapter->setValue( getValueEdit()->text().toDouble() );
     }

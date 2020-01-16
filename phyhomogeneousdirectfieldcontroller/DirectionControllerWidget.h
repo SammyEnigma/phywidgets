@@ -22,7 +22,7 @@ class DirectionControllerWidget : public QWidget
   public:
     explicit DirectionControllerWidget( QWidget* parent = nullptr );
 
-    void setDirectionController( VectorControllerAdapterPtr directionController );
+    void setDirectionController( VectorControllerAdapterWeakPtr directionControllerWeak );
 
   private slots:
     void updateTheta( double value );
@@ -36,7 +36,7 @@ class DirectionControllerWidget : public QWidget
     static double calculateAlpha( const phycoub::Vector& direction );
     static phycoub::Vector sphereToDecartCoordinate( double theta, double alpha );
 
-    VectorControllerAdapterPtr directionController_ = nullptr;
+    VectorControllerAdapterWeakPtr directionControllerWeak_;
     double thetaGrad_ = 0.;
     double alphaGrad_ = 0.;
 

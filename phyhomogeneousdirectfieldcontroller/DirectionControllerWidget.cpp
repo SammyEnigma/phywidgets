@@ -26,12 +26,12 @@ DirectionControllerWidget::DirectionControllerWidget( QWidget* parent )
 }
 
 void DirectionControllerWidget::setDirectionController(
-    VectorControllerAdapterPtr directionController )
+    VectorControllerAdapterWeakPtr directionControllerWeak )
 {
-    directionController_ = directionController;
-    if ( directionController_ )
+    directionControllerWeak_ = directionControllerWeak;
+    if ( auto directionController = directionControllerWeak_.lock() )
     {
-        const phycoub::Vector coordinate = directionController_->getValue();
+        const phycoub::Vector coordinate = directionController->getValue();
         thetaGrad_ = calculateTheta( coordinate );
         alphaGrad_ = calculateAlpha( coordinate );
 
@@ -73,10 +73,10 @@ void DirectionControllerWidget::configureSpinBox()
 
 void DirectionControllerWidget::updateDirectionController()
 {
-    if ( directionController_ )
+    if ( auto directionController = directionControllerWeak_.lock() )
     {
         auto decart = sphereToDecartCoordinate( thetaGrad_, alphaGrad_ );
-        directionController_->setValue( decart );
+        directionController->setValue( decart );
     }
 }
 

@@ -44,9 +44,9 @@ void DirectionViewerGLWidget::setGLRotattionController(
 }
 
 void DirectionViewerGLWidget::setDirectionController(
-    VectorControllerAdapterPtr directionController )
+    VectorControllerAdapterWeakPtr directionControllerWeak )
 {
-    directionController_ = directionController;
+    directionControllerWeak_ = directionControllerWeak;
     updateGL();
 }
 
@@ -193,9 +193,9 @@ void DirectionViewerGLWidget::drowCoordinateSystem()
 
 void DirectionViewerGLWidget::drowDirectionVector()
 {
-    if ( directionController_ )
+    if ( auto directionController = directionControllerWeak_.lock() )
     {
-        const phycoub::Vector direction = directionController_->getValue();
+        const phycoub::Vector direction = directionController->getValue();
 
         glLineWidth( 2.0f );
         glBegin( GL_LINES );

@@ -16,8 +16,7 @@ PhyScalarULongControllerWidget::PhyScalarULongControllerWidget( QWidget* parent 
 
 void PhyScalarULongControllerWidget::onSetScalarValueClicked()
 {
-    auto scalarConrollerAdapter = getScalarControllerAdapter();
-    if ( scalarConrollerAdapter )
+    if ( auto scalarConrollerAdapter = getScalarControllerAdapter().lock() )
     {
         scalarConrollerAdapter->setValue( getValueEdit()->text().toLong() );
     }
