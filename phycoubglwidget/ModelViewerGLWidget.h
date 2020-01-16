@@ -23,8 +23,7 @@ class ModelViewerGLWidget final
     virtual void updateGlRotation( int xRot, int yRot, int zRot ) override;
 
     void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
-    void setGetParticleForGLAdapter(
-        GetParticlesAdapterPtr getParticlesForGLAdapter );
+    void setGetParticleForGLAdapter( GetParticlesAdapterPtr getParticlesForGLAdapter );
     void setGLRotationController( GLRotationControllerPtr gLRotationController );
 
   public slots:
@@ -49,7 +48,7 @@ class ModelViewerGLWidget final
     int zRot_ = 0;
     double zoomScale_ = 0.7;
 
-    PhyCoubGL phyCoubGL;
+    PhyCoubGLPtr phyCoubGL_;
     GLRotationControllerPtr gLRotationController_ = nullptr;
     std::shared_ptr< GLRotationModelAdapter > gLRotationModelAdapter_ = nullptr;
 

@@ -8,7 +8,7 @@ namespace phywidgets
 
 ModelViewerGLWidget::ModelViewerGLWidget( QWidget* parent /* = nullptr*/ )
     : QGLWidget( QGLFormat( QGL::SampleBuffers ), parent )
-    , phyCoubGL( this )
+    , phyCoubGL_( std::make_shared< PhyCoubGL >( this ) )
 {
     QObject::connect( &timerPlot_, SIGNAL( timeout() ), this, SLOT( updateGL() ) );
     timerPlot_.start( 30 );
@@ -28,14 +28,14 @@ void ModelViewerGLWidget::updateGlRotation( int xRot, int yRot, int zRot )
 void ModelViewerGLWidget::setGetCoubSizeAdapter(
     GetCoubSizeAdapterPtr getCoubSizeAdapter )
 {
-    phyCoubGL.setGetCoubSizeAdapter( getCoubSizeAdapter );
+    phyCoubGL_->setGetCoubSizeAdapter( getCoubSizeAdapter );
     updateGL();
 }
 
 void ModelViewerGLWidget::setGetParticleForGLAdapter(
     GetParticlesAdapterPtr getParticlesForGLAdapter )
 {
-    phyCoubGL.setGetParticleForGLAdapter( getParticlesForGLAdapter );
+    phyCoubGL_->setGetParticleForGLAdapter( getParticlesForGLAdapter );
     updateGL();
 }
 
@@ -107,7 +107,7 @@ void ModelViewerGLWidget::paintGL()
     glRotatef( static_cast< float >( yRot_ / 16.0 ), 0.0, 1.0, 0.0 );
     glRotatef( static_cast< float >( zRot_ / 16.0 ), 0.0, 0.0, 1.0 );
 
-    phyCoubGL.updateScene();
+    phyCoubGL_->updateScene();
 }
 
 // virtual override

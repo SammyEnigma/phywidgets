@@ -1,15 +1,17 @@
+#include "PhyCoubGL.h"
+
 #include <QOpenGLFunctions>
 #include <QGL>
 #include <GL/glu.h>
+#include <unordered_set>
 
-#include "PhyCoubGL.h"
 #include "ParticleGroup.h"
 
 namespace phywidgets
 {
 
 // static
-const phycoub::Vector PhyCoubGL::origin_ = phycoub::Vector{ 0.5, 0.5, 0.5 };
+const Vector PhyCoubGL::origin_ = Vector{ 0.5, 0.5, 0.5 };
 
 PhyCoubGL::PhyCoubGL( QGLWidget* gLWidget )
     : gLWidget_( gLWidget )
@@ -22,15 +24,14 @@ void PhyCoubGL::setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter 
     coubSize_ = getCoubSizeAdapter->getCoubSize();
 }
 
-void PhyCoubGL::setGetParticleForGLAdapter(
-    GetParticlesAdapterPtr getParticlesForGLAdapter )
+void PhyCoubGL::setGetParticleForGLAdapter( GetParticlesAdapterPtr getParticlesAdapter )
 {
-    getParticlesForGLAdapterWeak_ = getParticlesForGLAdapter;
+    getParticlesAdapterWeak_ = getParticlesAdapter;
 }
 
 void PhyCoubGL::updateScene()
 {
-    if ( auto getParticlesForGLAdapter = getParticlesForGLAdapterWeak_.lock() )
+    if ( auto getParticlesForGLAdapter = getParticlesAdapterWeak_.lock() )
     {
         drowModelingCoub();
         drowParticlesWithColorsByGroup( getParticlesForGLAdapter->getParticles() );
@@ -38,18 +39,37 @@ void PhyCoubGL::updateScene()
     }
 }
 
+void PhyCoubGL::setDrowTrajectoryFlag( bool flag )
+{
+    drowTrajectoryFlag_ = flag;
+}
+
+bool PhyCoubGL::getDrowTrajectoryFlag() const
+{
+    return drowTrajectoryFlag_;
+}
+
 void PhyCoubGL::drowModelingCoub()
 {
     gLWidget_->qglColor( Qt::white );
-    drowCube( phycoub::Vector{ 0, 0, 0 }, 1 );
+    drowCube( Vector{ 0, 0, 0 }, 1 );
 }
 
 void PhyCoubGL::drowParticlesWithColorsByGroup(
-    const phycoub::ParticleGroupList& particleGroupList )
+    const ParticleGroupList& particleGroupList )
 {
     using namespace phycoub;
-    size_t colorIndex = 0;
 
+    std::unordered_set< IDType > trajectoryParticleIdList;
+    if ( drowTrajectoryFlag_ )
+    {
+        for ( const auto& [ key, value ] : trajectory_ )
+        {
+            trajectoryParticleIdList.emplace( key );
+        }
+    }
+
+    size_t colorIndex = 0;
     for ( ParticleGroupList::GroupConstIterator groupIterator
           = particleGroupList.beginGroup();
           groupIterator != particleGroupList.endGroup(); ++groupIterator )
@@ -62,16 +82,28 @@ void PhyCoubGL::drowParticlesWithColorsByGroup(
             const Vector mashtabedOriginCoordinate
                 = mashtabVector( particleCoordinate, coubSize_ ) - origin_;
             drowSphere( mashtabedOriginCoordinate, 0.01 );
-            /*
-                        auto& trajectoryVector = trajectory_[ particle->getId() ];
-                        trajectoryVector.push_back( mashtabedOriginCoordinate );
-                        if ( trajectoryVector.size() > 100 )
-                        {
-                            trajectoryVector.pop_front();
-                        }
-            */
+
+            if ( drowTrajectoryFlag_ )
+            {
+                trajectoryParticleIdList.extract( particle->getId() );
+
+                auto& trajectoryVector = trajectory_[ particle->getId() ];
+                trajectoryVector.push_back( mashtabedOriginCoordinate );
+                if ( trajectoryVector.size() > 100 )
+                {
+                    trajectoryVector.pop_front();
+                }
+            }
         }
         ++colorIndex;
+    }
+
+    if ( drowTrajectoryFlag_ )
+    {
+        for ( auto id : trajectoryParticleIdList )
+        {
+            trajectory_.extract( id );
+        }
     }
 }
 
@@ -87,7 +119,7 @@ void PhyCoubGL::drowTrajectory()
     }
 }
 
-void PhyCoubGL::drowSphere( const phycoub::Vector& coordinate, double radius )
+void PhyCoubGL::drowSphere( const Vector& coordinate, double radius )
 {
     glPushMatrix();
     glScalef( 1, 1, 1 );
@@ -101,7 +133,7 @@ void PhyCoubGL::drowSphere( const phycoub::Vector& coordinate, double radius )
     glPopMatrix();
 }
 
-void PhyCoubGL::drowCube( const phycoub::Vector& coordinate, double size )
+void PhyCoubGL::drowCube( const Vector& coordinate, double size )
 {
     glLineWidth( 2.0f );
     glBegin( GL_LINES );
@@ -192,10 +224,9 @@ void PhyCoubGL::drowCube( const phycoub::Vector& coordinate, double size )
 }
 
 // static
-phycoub::Vector PhyCoubGL::mashtabVector(
-    const phycoub::Vector& coordinate, const phycoub::Vector& mashtab )
+Vector PhyCoubGL::mashtabVector( const Vector& coordinate, const Vector& mashtab )
 {
-    const phycoub::Vector mashtabedVector = phycoub::Vector{
+    const Vector mashtabedVector = Vector{
         coordinate.x_ / mashtab.x_,
         coordinate.y_ / mashtab.y_,
         coordinate.z_ / mashtab.z_,
