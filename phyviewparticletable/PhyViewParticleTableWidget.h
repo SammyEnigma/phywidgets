@@ -21,8 +21,8 @@ class PhyViewParticleTableWidget : public QWidget
   public:
     explicit PhyViewParticleTableWidget( QWidget* parent = nullptr );
 
-    void setGetParticleAdapter( GetParticlesAdapterPtr getParticlesForGLAdapter );
-    void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
+    void setGetParticleAdapter( GetParticlesAdapterWeakPtr getParticlesForGLAdapter );
+    void setGetCoubSizeAdapter( GetCoubSizeAdapterWeakPtr getCoubSizeAdapter );
 
   private slots:
     void updateParticleTable();
@@ -30,8 +30,8 @@ class PhyViewParticleTableWidget : public QWidget
   private:
     void initializeTableWidget();
 
-    GetParticlesAdapterPtr getParticlesForGLAdapter_ = nullptr;
-    GetCoubSizeAdapterPtr getCoubSizeAdapter_ = nullptr;
+    GetParticlesAdapterWeakPtr getParticlesAdapterWeak_;
+    GetCoubSizeAdapterWeakPtr getCoubSizeAdapterWeak_;
 
     QTimer timerPlot_;
 

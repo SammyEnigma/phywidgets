@@ -16,7 +16,7 @@ class GetParticlesAdapterIface
     virtual phycoub::ParticleGroupList getParticles() const = 0;
 };
 
-using GetParticlesAdapterPtr = std::shared_ptr< GetParticlesAdapterIface >;
+using GetParticlesAdapterWeakPtr = std::weak_ptr< GetParticlesAdapterIface >;
 
 } // namespace phywidgets
 

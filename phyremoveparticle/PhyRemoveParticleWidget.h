@@ -22,7 +22,7 @@ class PhyRemoveParticleWidget : public QWidget
     explicit PhyRemoveParticleWidget( QWidget* parent = nullptr );
 
     void setRemoveParticleControllerAdapter(
-        ParticleRemoveControllerAdapter particleRemoveControllerAdapter );
+        ParticleRemoveControllerAdapterWeakPtr particleRemoveControllerAdapterWeak );
     PhyCoubControllerSubscriberWeakPtr getPhyCoubSubsriber();
 
   private slots:
@@ -34,7 +34,7 @@ class PhyRemoveParticleWidget : public QWidget
   private:
     void configureInputs();
 
-    ParticleRemoveControllerAdapter particleRemoveControllerAdapter_ = nullptr;
+    ParticleRemoveControllerAdapterWeakPtr particleRemoveControllerAdapterWeak_;
     PhyRemoveParticlePhyCoubSubscriberPtr coubControllerSubscriber_ = nullptr;
 
     QHBoxLayout* layout_ = nullptr;

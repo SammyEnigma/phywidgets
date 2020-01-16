@@ -22,62 +22,68 @@ PhyViewParticleTableWidget::PhyViewParticleTableWidget( QWidget* parent /* = nul
 }
 
 void PhyViewParticleTableWidget::setGetParticleAdapter(
-    GetParticlesAdapterPtr getParticlesForGLAdapter )
+    GetParticlesAdapterWeakPtr getParticlesForGLAdapter )
 {
-    getParticlesForGLAdapter_ = getParticlesForGLAdapter;
+    getParticlesAdapterWeak_ = getParticlesForGLAdapter;
 }
 
 void PhyViewParticleTableWidget::setGetCoubSizeAdapter(
-    GetCoubSizeAdapterPtr getCoubSizeAdapter )
+    GetCoubSizeAdapterWeakPtr getCoubSizeAdapter )
 {
-    getCoubSizeAdapter_ = getCoubSizeAdapter;
+    getCoubSizeAdapterWeak_ = getCoubSizeAdapter;
 }
 
 void PhyViewParticleTableWidget::updateParticleTable()
 {
     using namespace phycoub;
 
-    if ( getParticlesForGLAdapter_ && getCoubSizeAdapter_ )
-    {
-        const Vector& coubSize = getCoubSizeAdapter_->getCoubSize();
-
-        const ParticleGroupList& particleGroupList
-            = getParticlesForGLAdapter_->getParticles();
-
-        tableWidget_->setRowCount(
-            static_cast< int >( particleGroupList.getParticleCount() ) );
-
-        int rowIndex = 0;
-        for ( const ParticlePtr& particle : particleGroupList )
+    if ( auto getParticlesAdapter = getParticlesAdapterWeak_.lock() )
+        if ( auto getCoubSizeAdapter = getCoubSizeAdapterWeak_.lock() )
         {
-            tableWidget_->setItem( rowIndex, 0,
-                new QTableWidgetItem( QString::number( particle->getId() ) ) );
+            {
+                const Vector& coubSize = getCoubSizeAdapter->getCoubSize();
 
-            const Vector& coordinate = particle->getCoordinate();
-            tableWidget_->setItem( rowIndex, 1,
-                new QTableWidgetItem( QString::number( coordinate.x_ / coubSize.x_ ) ) );
-            tableWidget_->setItem( rowIndex, 2,
-                new QTableWidgetItem( QString::number( coordinate.y_ / coubSize.y_ ) ) );
-            tableWidget_->setItem( rowIndex, 3,
-                new QTableWidgetItem( QString::number( coordinate.z_ / coubSize.z_ ) ) );
+                const ParticleGroupList& particleGroupList
+                    = getParticlesAdapter->getParticles();
 
-            const Vector& speed = particle->getSpeed();
-            tableWidget_->setItem(
-                rowIndex, 4, new QTableWidgetItem( QString::number( speed.x_ ) ) );
-            tableWidget_->setItem(
-                rowIndex, 5, new QTableWidgetItem( QString::number( speed.y_ ) ) );
-            tableWidget_->setItem(
-                rowIndex, 6, new QTableWidgetItem( QString::number( speed.z_ ) ) );
+                tableWidget_->setRowCount(
+                    static_cast< int >( particleGroupList.getParticleCount() ) );
 
-            const ParticleOptions options = particle->getOptions();
-            tableWidget_->setItem(
-                rowIndex, 7, new QTableWidgetItem( QString::number( options.m_ ) ) );
-            tableWidget_->setItem(
-                rowIndex, 8, new QTableWidgetItem( QString::number( options.q_ ) ) );
+                int rowIndex = 0;
+                for ( const ParticlePtr& particle : particleGroupList )
+                {
+                    tableWidget_->setItem( rowIndex, 0,
+                        new QTableWidgetItem( QString::number( particle->getId() ) ) );
 
-            ++rowIndex;
+                    const Vector& coordinate = particle->getCoordinate();
+                    tableWidget_->setItem( rowIndex, 1,
+                        new QTableWidgetItem(
+                            QString::number( coordinate.x_ / coubSize.x_ ) ) );
+                    tableWidget_->setItem( rowIndex, 2,
+                        new QTableWidgetItem(
+                            QString::number( coordinate.y_ / coubSize.y_ ) ) );
+                    tableWidget_->setItem( rowIndex, 3,
+                        new QTableWidgetItem(
+                            QString::number( coordinate.z_ / coubSize.z_ ) ) );
+
+                    const Vector& speed = particle->getSpeed();
+                    tableWidget_->setItem( rowIndex, 4,
+                        new QTableWidgetItem( QString::number( speed.x_ ) ) );
+                    tableWidget_->setItem( rowIndex, 5,
+                        new QTableWidgetItem( QString::number( speed.y_ ) ) );
+                    tableWidget_->setItem( rowIndex, 6,
+                        new QTableWidgetItem( QString::number( speed.z_ ) ) );
+
+                    const ParticleOptions options = particle->getOptions();
+                    tableWidget_->setItem( rowIndex, 7,
+                        new QTableWidgetItem( QString::number( options.m_ ) ) );
+                    tableWidget_->setItem( rowIndex, 8,
+                        new QTableWidgetItem( QString::number( options.q_ ) ) );
+
+                    ++rowIndex;
+                }
+            }
         }
-    }
 }
 
 void PhyViewParticleTableWidget::initializeTableWidget()

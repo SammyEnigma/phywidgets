@@ -20,9 +20,9 @@ PhyRemoveParticleWidget::PhyRemoveParticleWidget( QWidget* parent )
 }
 
 void PhyRemoveParticleWidget::setRemoveParticleControllerAdapter(
-    ParticleRemoveControllerAdapter particleRemoveControllerAdapter )
+    ParticleRemoveControllerAdapterWeakPtr particleRemoveControllerAdapterWeak )
 {
-    particleRemoveControllerAdapter_ = particleRemoveControllerAdapter;
+    particleRemoveControllerAdapterWeak_ = particleRemoveControllerAdapterWeak;
 }
 
 PhyCoubControllerSubscriberWeakPtr PhyRemoveParticleWidget::getPhyCoubSubsriber()
@@ -32,9 +32,10 @@ PhyCoubControllerSubscriberWeakPtr PhyRemoveParticleWidget::getPhyCoubSubsriber(
 
 void PhyRemoveParticleWidget::removeParticle()
 {
-    if ( particleRemoveControllerAdapter_ )
+    if ( auto particleRemoveControllerAdapter
+        = particleRemoveControllerAdapterWeak_.lock() )
     {
-        particleRemoveControllerAdapter_->removeParticle(
+        particleRemoveControllerAdapter->removeParticle(
             indexParticleEdit_->text().toInt() );
     }
 }

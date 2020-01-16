@@ -31,8 +31,8 @@ class PhyCoubGL final : public PhyCoubControllerSubscriberIface
     virtual void onStart() override;
     virtual void onStop() override;
 
-    void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
-    void setGetParticleForGLAdapter( GetParticlesAdapterPtr getParticlesAdapter );
+    void setGetCoubSizeAdapter( GetCoubSizeAdapterWeakPtr getCoubSizeAdapterWeak );
+    void setGetParticleForGLAdapter( GetParticlesAdapterWeakPtr getParticlesAdapterWeak );
     void updateScene();
 
     void setDrowTrajectoryFlag( bool flag );
@@ -53,8 +53,8 @@ class PhyCoubGL final : public PhyCoubControllerSubscriberIface
     bool updateTrajectoryFlag_ = false;
     std::unordered_map< IDType, std::list< Vector > > trajectory_;
 
-    std::weak_ptr< GetCoubSizeAdapterIface > getCoubSizeAdapterWeak_;
-    std::weak_ptr< GetParticlesAdapterIface > getParticlesAdapterWeak_;
+    GetCoubSizeAdapterWeakPtr getCoubSizeAdapterWeak_;
+    GetParticlesAdapterWeakPtr getParticlesAdapterWeak_;
 
     QGLWidget* gLWidget_ = nullptr;
     Vector coubSize_;

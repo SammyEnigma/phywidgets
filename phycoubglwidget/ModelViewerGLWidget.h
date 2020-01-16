@@ -25,8 +25,8 @@ class ModelViewerGLWidget final
     // Implementation of GLRotationIface
     virtual void updateGlRotation( int xRot, int yRot, int zRot ) override;
 
-    void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
-    void setGetParticleForGLAdapter( GetParticlesAdapterPtr getParticlesForGLAdapter );
+    void setGetCoubSizeAdapter( GetCoubSizeAdapterWeakPtr getCoubSizeAdapter );
+    void setGetParticleForGLAdapter( GetParticlesAdapterWeakPtr getParticlesForGLAdapter );
     void setGLRotationController( GLRotationControllerPtr gLRotationController );
 
     BoolControllerAdapterWeakPtr getTrajectoryControllerAdapter();

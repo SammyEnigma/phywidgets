@@ -23,8 +23,8 @@ class PhyAddParticleWidget : public QWidget
     explicit PhyAddParticleWidget( QWidget* parent = nullptr );
 
     void setAddParticleControllerAdapter(
-        AddParticleControllerAdapterPtr addParticleControllerAdapter );
-    void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
+        AddParticleControllerAdapterWeakPtr addParticleControllerAdapterWeak );
+    void setGetCoubSizeAdapter( GetCoubSizeAdapterWeakPtr getCoubSizeAdapterWeak );
     PhyCoubControllerSubscriberWeakPtr getPhyCoubSubsriber();
 
     void setDefaultOptions( ParticleOptions options );
@@ -40,8 +40,8 @@ class PhyAddParticleWidget : public QWidget
 
     ParticleOptions defaultParticleOptions_;
 
-    AddParticleControllerAdapterPtr addParticleControllerAdapter_ = nullptr;
-    GetCoubSizeAdapterPtr getCoubSizeAdapter_ = nullptr;
+    AddParticleControllerAdapterWeakPtr addParticleControllerAdapterWeak_;
+    GetCoubSizeAdapterWeakPtr getCoubSizeAdapterWeak_;
     PhyAddParticlePhyCoubSubscriberPtr coubControllerSubscriber_ = nullptr;
 
     QHBoxLayout* addParticleLayout_ = nullptr;

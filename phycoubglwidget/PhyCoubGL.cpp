@@ -30,15 +30,19 @@ void PhyCoubGL::onStop()
     updateTrajectoryFlag_ = false;
 }
 
-void PhyCoubGL::setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter )
+void PhyCoubGL::setGetCoubSizeAdapter( GetCoubSizeAdapterWeakPtr getCoubSizeAdapterWeak )
 {
-    getCoubSizeAdapterWeak_ = getCoubSizeAdapter;
-    coubSize_ = getCoubSizeAdapter->getCoubSize();
+    getCoubSizeAdapterWeak_ = getCoubSizeAdapterWeak;
+    if ( auto getCoubSizeAdapter = getCoubSizeAdapterWeak_.lock() )
+    {
+        coubSize_ = getCoubSizeAdapter->getCoubSize();
+    }
 }
 
-void PhyCoubGL::setGetParticleForGLAdapter( GetParticlesAdapterPtr getParticlesAdapter )
+void PhyCoubGL::setGetParticleForGLAdapter(
+    GetParticlesAdapterWeakPtr getParticlesAdapterWeak )
 {
-    getParticlesAdapterWeak_ = getParticlesAdapter;
+    getParticlesAdapterWeak_ = getParticlesAdapterWeak;
 }
 
 void PhyCoubGL::updateScene()

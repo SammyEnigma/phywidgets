@@ -28,14 +28,14 @@ void ModelViewerGLWidget::updateGlRotation( int xRot, int yRot, int zRot )
 }
 
 void ModelViewerGLWidget::setGetCoubSizeAdapter(
-    GetCoubSizeAdapterPtr getCoubSizeAdapter )
+    GetCoubSizeAdapterWeakPtr getCoubSizeAdapter )
 {
     phyCoubGL_->setGetCoubSizeAdapter( getCoubSizeAdapter );
     updateGL();
 }
 
 void ModelViewerGLWidget::setGetParticleForGLAdapter(
-    GetParticlesAdapterPtr getParticlesForGLAdapter )
+    GetParticlesAdapterWeakPtr getParticlesForGLAdapter )
 {
     phyCoubGL_->setGetParticleForGLAdapter( getParticlesForGLAdapter );
     updateGL();

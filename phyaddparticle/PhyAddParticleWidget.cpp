@@ -43,15 +43,15 @@ PhyAddParticleWidget::PhyAddParticleWidget( QWidget* parent )
 }
 
 void PhyAddParticleWidget::setAddParticleControllerAdapter(
-    AddParticleControllerAdapterPtr addParticleControllerAdapter )
+    AddParticleControllerAdapterWeakPtr addParticleControllerAdapterWeak )
 {
-    addParticleControllerAdapter_ = addParticleControllerAdapter;
+    addParticleControllerAdapterWeak_ = addParticleControllerAdapterWeak;
 }
 
 void PhyAddParticleWidget::setGetCoubSizeAdapter(
-    GetCoubSizeAdapterPtr getCoubSizeAdapter )
+    GetCoubSizeAdapterWeakPtr getCoubSizeAdapterWeak )
 {
-    getCoubSizeAdapter_ = getCoubSizeAdapter;
+    getCoubSizeAdapterWeak_ = getCoubSizeAdapterWeak;
 }
 
 PhyCoubControllerSubscriberWeakPtr PhyAddParticleWidget::getPhyCoubSubsriber()
@@ -68,23 +68,26 @@ void PhyAddParticleWidget::addParticle()
 {
     using namespace phycoub;
 
-    if ( addParticleControllerAdapter_ && getCoubSizeAdapter_ )
-    {
-        const Vector& coubSize = getCoubSizeAdapter_->getCoubSize();
-        const Vector coordinate{ coordinateXParticleEdit_->text().toDouble()
-                * coubSize.x_,
-            coordinateYParticleEdit_->text().toDouble() * coubSize.y_,
-            coordinateZParticleEdit_->text().toDouble() * coubSize.z_ };
+    if ( auto addParticleControllerAdapter = addParticleControllerAdapterWeak_.lock() )
+        if ( auto getCoubSizeAdapter = getCoubSizeAdapterWeak_.lock() )
+        {
+            {
+                const Vector& coubSize = getCoubSizeAdapter->getCoubSize();
+                const Vector coordinate{ coordinateXParticleEdit_->text().toDouble()
+                        * coubSize.x_,
+                    coordinateYParticleEdit_->text().toDouble() * coubSize.y_,
+                    coordinateZParticleEdit_->text().toDouble() * coubSize.z_ };
 
-        const Vector speed{ speedXParticleEdit_->text().toDouble(),
-            speedYParticleEdit_->text().toDouble(),
-            speedZParticleEdit_->text().toDouble() };
+                const Vector speed{ speedXParticleEdit_->text().toDouble(),
+                    speedYParticleEdit_->text().toDouble(),
+                    speedZParticleEdit_->text().toDouble() };
 
-        const ParticleOptions options{ weightParticleEdit_->text().toDouble(),
-            chargeParticleEdit_->text().toDouble() };
+                const ParticleOptions options{ weightParticleEdit_->text().toDouble(),
+                    chargeParticleEdit_->text().toDouble() };
 
-        addParticleControllerAdapter_->addParticle( coordinate, speed, options );
-    }
+                addParticleControllerAdapter->addParticle( coordinate, speed, options );
+            }
+        }
 }
 
 void PhyAddParticleWidget::configureInputs()

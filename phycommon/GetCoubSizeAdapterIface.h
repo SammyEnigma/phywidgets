@@ -16,7 +16,7 @@ class GetCoubSizeAdapterIface
     virtual phycoub::Vector getCoubSize() const = 0;
 };
 
-using GetCoubSizeAdapterPtr = std::shared_ptr< GetCoubSizeAdapterIface >;
+using GetCoubSizeAdapterWeakPtr = std::weak_ptr< GetCoubSizeAdapterIface >;
 
 } // namespace phywidgets
 

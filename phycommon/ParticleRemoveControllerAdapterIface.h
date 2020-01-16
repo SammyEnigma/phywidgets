@@ -16,8 +16,8 @@ class ParticleRemoveControllerAdapterIface
     virtual void removeParticle( phycoub::IDType id ) = 0;
 };
 
-using ParticleRemoveControllerAdapter
-    = std::shared_ptr< ParticleRemoveControllerAdapterIface >;
+using ParticleRemoveControllerAdapterWeakPtr
+    = std::weak_ptr< ParticleRemoveControllerAdapterIface >;
 
 } // namespace phywidgets
 

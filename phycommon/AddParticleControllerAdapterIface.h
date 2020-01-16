@@ -20,8 +20,8 @@ class AddParticleControllerAdapterIface
         const ParticleOptions& particleOptions );
 };
 
-using AddParticleControllerAdapterPtr
-    = std::shared_ptr< AddParticleControllerAdapterIface >;
+using AddParticleControllerAdapterWeakPtr
+    = std::weak_ptr< AddParticleControllerAdapterIface >;
 
 } // namespace phywidgets
 
