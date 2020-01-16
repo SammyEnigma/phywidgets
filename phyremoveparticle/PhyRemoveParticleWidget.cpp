@@ -25,7 +25,7 @@ void PhyRemoveParticleWidget::setRemoveParticleControllerAdapter(
     particleRemoveControllerAdapter_ = particleRemoveControllerAdapter;
 }
 
-PhyCoubControllerSubscriberPtr PhyRemoveParticleWidget::getPhyCoubSubsriber()
+PhyCoubControllerSubscriberWeakPtr PhyRemoveParticleWidget::getPhyCoubSubsriber()
 {
     return coubControllerSubscriber_;
 }

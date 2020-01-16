@@ -23,7 +23,7 @@ class PhyRemoveParticleWidget : public QWidget
 
     void setRemoveParticleControllerAdapter(
         ParticleRemoveControllerAdapter particleRemoveControllerAdapter );
-    PhyCoubControllerSubscriberPtr getPhyCoubSubsriber();
+    PhyCoubControllerSubscriberWeakPtr getPhyCoubSubsriber();
 
   private slots:
     void removeParticle();

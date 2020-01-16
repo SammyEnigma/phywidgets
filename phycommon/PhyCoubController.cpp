@@ -89,7 +89,7 @@ void PhyCoubController::resetToZeroExperimentTime()
     coub_->resetToZeroExperimentTime();
 }
 
-void PhyCoubController::subscribe( PhyCoubControllerSubscriberPtr subscriber )
+void PhyCoubController::subscribe( PhyCoubControllerSubscriberWeakPtr subscriber )
 {
     subscribers_.push_back( subscriber );
 }

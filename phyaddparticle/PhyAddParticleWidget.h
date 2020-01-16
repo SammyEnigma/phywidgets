@@ -25,7 +25,7 @@ class PhyAddParticleWidget : public QWidget
     void setAddParticleControllerAdapter(
         AddParticleControllerAdapterPtr addParticleControllerAdapter );
     void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
-    PhyCoubControllerSubscriberPtr getPhyCoubSubsriber();
+    PhyCoubControllerSubscriberWeakPtr getPhyCoubSubsriber();
 
     void setDefaultOptions( ParticleOptions options );
 

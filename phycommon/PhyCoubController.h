@@ -31,7 +31,7 @@ class PhyCoubController final : public GetParticlesAdapterIface
     double getExperimentTime() const;
     void resetToZeroExperimentTime();
 
-    void subscribe( PhyCoubControllerSubscriberPtr subscriber );
+    void subscribe( PhyCoubControllerSubscriberWeakPtr subscriber );
 
   private:
     phycoub::ParticleGroupList particlesForGL_;
@@ -41,7 +41,7 @@ class PhyCoubController final : public GetParticlesAdapterIface
     std::future< void > calculationThread_;
     phycoub::PhyCoubPtr coub_;
 
-    std::list< std::weak_ptr< PhyCoubControllerSubscriberIface > > subscribers_;
+    std::list< PhyCoubControllerSubscriberWeakPtr > subscribers_;
 };
 
 using PhyCoubControllerPtr = std::shared_ptr< PhyCoubController >;

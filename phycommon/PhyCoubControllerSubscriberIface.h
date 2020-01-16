@@ -15,8 +15,8 @@ class PhyCoubControllerSubscriberIface
     virtual void onStop() = 0;
 };
 
-using PhyCoubControllerSubscriberPtr
-    = std::shared_ptr< PhyCoubControllerSubscriberIface >;
+using PhyCoubControllerSubscriberWeakPtr
+    = std::weak_ptr< PhyCoubControllerSubscriberIface >;
 
 } // namespace phywidgets
 

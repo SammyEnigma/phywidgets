@@ -54,7 +54,7 @@ void PhyAddParticleWidget::setGetCoubSizeAdapter(
     getCoubSizeAdapter_ = getCoubSizeAdapter;
 }
 
-PhyCoubControllerSubscriberPtr PhyAddParticleWidget::getPhyCoubSubsriber()
+PhyCoubControllerSubscriberWeakPtr PhyAddParticleWidget::getPhyCoubSubsriber()
 {
     return coubControllerSubscriber_;
 }

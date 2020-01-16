@@ -28,7 +28,7 @@ class PhyScalarControllerWidgetBase : public QWidget
         ScalarTypeControllerAdapterWeakPtr scalarControllerAdapterWeak );
     void setScalarValueLabel( const QString& scalarValueLabel );
 
-    PhyCoubControllerSubscriberPtr getPhyCoubControllerSubscriber();
+    PhyCoubControllerSubscriberWeakPtr getPhyCoubControllerSubscriber();
 
   protected:
     friend class PhyScalarPhyCoubControllerSubscriber< ValueType >;
@@ -93,7 +93,7 @@ void PhyScalarControllerWidgetBase< ValueType >::setScalarValueLabel(
 }
 
 template< typename ValueType >
-PhyCoubControllerSubscriberPtr
+PhyCoubControllerSubscriberWeakPtr
 PhyScalarControllerWidgetBase< ValueType >::getPhyCoubControllerSubscriber()
 {
     return controllerSubscriber_;
