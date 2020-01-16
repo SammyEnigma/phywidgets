@@ -9,7 +9,7 @@
 
 #include "ValueControllerAdapterIface.h"
 #include "PhyScalarPhyCoubControllerSubscriber.h"
-#include "PhyCoubController.h"
+#include "PhyCoubControllerSubscriberIface.h"
 
 namespace phywidgets
 {
@@ -28,7 +28,7 @@ class PhyScalarControllerWidgetBase : public QWidget
         ScalarTypeControllerAdapterWeakPtr scalarControllerAdapterWeak );
     void setScalarValueLabel( const QString& scalarValueLabel );
 
-    void setPhyCoubController( PhyCoubControllerPtr phyCoubController );
+    PhyCoubControllerSubscriberPtr getPhyCoubControllerSubscriber();
 
   protected:
     friend class PhyScalarPhyCoubControllerSubscriber< ValueType >;
@@ -41,9 +41,8 @@ class PhyScalarControllerWidgetBase : public QWidget
 
   private:
     void configureScalarVaule();
-    ScalarTypeControllerAdapterWeakPtr scalarConrollerAdapterWeak_;
 
-    std::weak_ptr< PhyCoubController > phyCoubControllerWeak_;
+    ScalarTypeControllerAdapterWeakPtr scalarConrollerAdapterWeak_;
     PhyScalarPhyCoubControllerSubscriberPtr< ValueType > controllerSubscriber_ = nullptr;
 
     QHBoxLayout* scalarLayout_ = nullptr;
@@ -94,14 +93,10 @@ void PhyScalarControllerWidgetBase< ValueType >::setScalarValueLabel(
 }
 
 template< typename ValueType >
-void PhyScalarControllerWidgetBase< ValueType >::setPhyCoubController(
-    PhyCoubControllerPtr phyCoubController )
+PhyCoubControllerSubscriberPtr
+PhyScalarControllerWidgetBase< ValueType >::getPhyCoubControllerSubscriber()
 {
-    phyCoubControllerWeak_ = phyCoubController;
-    if ( auto phyCoubController = phyCoubControllerWeak_.lock() )
-    {
-        phyCoubController->subscribe( controllerSubscriber_ );
-    }
+    return controllerSubscriber_;
 }
 
 template< typename ValueType >
