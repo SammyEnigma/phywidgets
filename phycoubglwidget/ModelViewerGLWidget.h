@@ -7,6 +7,8 @@
 #include "PhyCoubGL.h"
 #include "GLRotationController.h"
 #include "GLRotationModelAdapter.h"
+#include "ValueControllerAdapterIface.h"
+#include "PhyCoubGlScalarControllerAdapters.h"
 
 namespace phywidgets
 {
@@ -25,6 +27,8 @@ class ModelViewerGLWidget final
     void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
     void setGetParticleForGLAdapter( GetParticlesAdapterPtr getParticlesForGLAdapter );
     void setGLRotationController( GLRotationControllerPtr gLRotationController );
+
+    BoolControllerAdapterWeakPtr getTrajectoryControllerAdapter();
 
   public slots:
     void setXRotation( int angle );
@@ -49,6 +53,8 @@ class ModelViewerGLWidget final
     double zoomScale_ = 0.7;
 
     PhyCoubGLPtr phyCoubGL_;
+    TrajectoryScalarControllerAdapterPtr trajectoryControllerAdapter_;
+
     GLRotationControllerPtr gLRotationController_ = nullptr;
     std::shared_ptr< GLRotationModelAdapter > gLRotationModelAdapter_ = nullptr;
 

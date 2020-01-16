@@ -18,6 +18,8 @@ class ValueControllerAdapterIface
     virtual void setValue( ValueType value ) = 0;
 };
 
+using BoolControllerAdapterWeakPtr = std::weak_ptr< ValueControllerAdapterIface< bool > >;
+
 using DoubleControllerAdapterWeakPtr
     = std::weak_ptr< ValueControllerAdapterIface< double > >;
 

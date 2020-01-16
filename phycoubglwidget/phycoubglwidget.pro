@@ -49,7 +49,8 @@ SOURCES += \
 HEADERS += \
     GLRotationModelAdapter.h \
     ModelViewerGLWidget.h \
-    PhyCoubGL.h
+    PhyCoubGL.h \
+    PhyCoubGLScalarControllerAdapters.h
 
 # Default rules for deployment.
 unix {

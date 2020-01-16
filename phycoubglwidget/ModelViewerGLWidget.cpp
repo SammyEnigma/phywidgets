@@ -9,6 +9,8 @@ namespace phywidgets
 ModelViewerGLWidget::ModelViewerGLWidget( QWidget* parent /* = nullptr*/ )
     : QGLWidget( QGLFormat( QGL::SampleBuffers ), parent )
     , phyCoubGL_( std::make_shared< PhyCoubGL >( this ) )
+    , trajectoryControllerAdapter_(
+          std::make_shared< TrajectoryScalarControllerAdapter >( phyCoubGL_ ) )
 {
     QObject::connect( &timerPlot_, SIGNAL( timeout() ), this, SLOT( updateGL() ) );
     timerPlot_.start( 30 );
@@ -47,6 +49,11 @@ void ModelViewerGLWidget::setGLRotationController(
     {
         gLRotationController_->subscribeForUpdates( gLRotationModelAdapter_ );
     }
+}
+
+BoolControllerAdapterWeakPtr ModelViewerGLWidget::getTrajectoryControllerAdapter()
+{
+    return trajectoryControllerAdapter_;
 }
 
 void ModelViewerGLWidget::setXRotation( int angle )
