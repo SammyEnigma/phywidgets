@@ -7,6 +7,8 @@ namespace phywidgets
 
 PhyRemoveParticleWidget::PhyRemoveParticleWidget( QWidget* parent )
     : QWidget( parent )
+    , coubControllerSubscriber_(
+          std::make_shared< PhyRemoveParticlePhyCoubSubscriber >( this ) )
     , layout_( new QHBoxLayout( this ) )
     , indexParticleLayout_( new QVBoxLayout( this ) )
     , indexParticleLabel_( new QLabel( this ) )
@@ -21,6 +23,11 @@ void PhyRemoveParticleWidget::setRemoveParticleControllerAdapter(
     ParticleRemoveControllerAdapter particleRemoveControllerAdapter )
 {
     particleRemoveControllerAdapter_ = particleRemoveControllerAdapter;
+}
+
+PhyCoubControllerSubscriberPtr PhyRemoveParticleWidget::getPhyCoubSubsriber()
+{
+    return coubControllerSubscriber_;
 }
 
 void PhyRemoveParticleWidget::removeParticle()

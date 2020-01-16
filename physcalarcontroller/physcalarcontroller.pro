@@ -46,9 +46,9 @@ SOURCES += \
     PhyScalarULongControllerWidget.cpp
 
 HEADERS += \
-    PhyScalarControllerSubscriber.h \
     PhyScalarControllerWidgetBase.h \
     PhyScalarDoubleControllerWidget.h \
+    PhyScalarPhyCoubControllerSubscriber.h \
     PhyScalarULongControllerWidget.h
 
 # Default rules for deployment.

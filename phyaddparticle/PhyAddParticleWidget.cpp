@@ -9,6 +9,8 @@ namespace phywidgets
 
 PhyAddParticleWidget::PhyAddParticleWidget( QWidget* parent )
     : QWidget( parent )
+    , coubControllerSubscriber_(
+          std::make_shared< PhyAddParticlePhyCoubSubscriber >( this ) )
     , addParticleLayout_( new QHBoxLayout( this ) )
     , coordinateXLayout_( new QVBoxLayout( this ) )
     , coordinateYLayout_( new QVBoxLayout( this ) )
@@ -50,6 +52,11 @@ void PhyAddParticleWidget::setGetCoubSizeAdapter(
     GetCoubSizeAdapterPtr getCoubSizeAdapter )
 {
     getCoubSizeAdapter_ = getCoubSizeAdapter;
+}
+
+PhyCoubControllerSubscriberPtr PhyAddParticleWidget::getPhyCoubSubsriber()
+{
+    return coubControllerSubscriber_;
 }
 
 void PhyAddParticleWidget::setDefaultOptions( ParticleOptions options )

@@ -8,7 +8,7 @@
 #include <QPushButton>
 
 #include "ValueControllerAdapterIface.h"
-#include "PhyScalarControllerSubscriber.h"
+#include "PhyScalarPhyCoubControllerSubscriber.h"
 #include "PhyCoubController.h"
 
 namespace phywidgets
@@ -19,7 +19,7 @@ class PhyScalarControllerWidgetBase : public QWidget
 {
   public:
     explicit PhyScalarControllerWidgetBase( QWidget* parent = nullptr );
-    virtual ~PhyScalarControllerWidgetBase() = default;
+    virtual ~PhyScalarControllerWidgetBase();
 
     using ScalarTypeControllerAdapterPtr
         = std::shared_ptr< ValueControllerAdapterIface< ValueType > >;
@@ -30,7 +30,7 @@ class PhyScalarControllerWidgetBase : public QWidget
     void setPhyCoubController( PhyCoubControllerPtr phyCoubController );
 
   protected:
-    friend class PhyScalarControllerSubscriber< ValueType >;
+    friend class PhyScalarPhyCoubControllerSubscriber< ValueType >;
 
     QLineEdit* getValueEdit();
     QPushButton* getSetValueButton();
@@ -43,8 +43,7 @@ class PhyScalarControllerWidgetBase : public QWidget
     ScalarTypeControllerAdapterPtr scalarConrollerAdapter_ = nullptr;
 
     std::weak_ptr< PhyCoubController > phyCoubControllerWeak_;
-    std::shared_ptr< PhyScalarControllerSubscriber< ValueType > > controllerSubscriber_
-        = nullptr;
+    PhyScalarPhyCoubControllerSubscriberPtr< ValueType > controllerSubscriber_ = nullptr;
 
     QHBoxLayout* scalarLayout_ = nullptr;
     QVBoxLayout* scalarEditLayout_ = nullptr;
@@ -62,10 +61,16 @@ PhyScalarControllerWidgetBase< ValueType >::PhyScalarControllerWidgetBase(
     , scalarValueEdit_( new QLineEdit( this ) )
     , setScalarValueButton_( new QPushButton( this ) )
     , controllerSubscriber_(
-          std::make_shared< PhyScalarControllerSubscriber< ValueType > >( this ) )
+          std::make_shared< PhyScalarPhyCoubControllerSubscriber< ValueType > >( this ) )
 {
     configureScalarVaule();
     setLayout( scalarLayout_ );
+}
+
+template< typename ValueType >
+PhyScalarControllerWidgetBase< ValueType >::~PhyScalarControllerWidgetBase()
+{
+    controllerSubscriber_->release();
 }
 
 template< typename ValueType >

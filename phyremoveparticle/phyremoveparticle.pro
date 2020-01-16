@@ -42,9 +42,11 @@ INCLUDEPATH += \
   ../phycommon/
 
 SOURCES += \
+    PhyRemoveParticlePhyCoubSubscriber.cpp \
     PhyRemoveParticleWidget.cpp
 
 HEADERS += \
+    PhyRemoveParticlePhyCoubSubscriber.h \
     PhyRemoveParticleWidget.h
 
 # Default rules for deployment.

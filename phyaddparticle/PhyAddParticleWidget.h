@@ -10,6 +10,8 @@
 
 #include "AddParticleControllerAdapterIface.h"
 #include "GetCoubSizeAdapterIface.h"
+#include "PhyAddParticlePhyCoubSubscriber.h"
+#include "PhyCoubControllerSubscriberIface.h"
 
 namespace phywidgets
 {
@@ -23,11 +25,15 @@ class PhyAddParticleWidget : public QWidget
     void setAddParticleControllerAdapter(
         AddParticleControllerAdapterPtr addParticleControllerAdapter );
     void setGetCoubSizeAdapter( GetCoubSizeAdapterPtr getCoubSizeAdapter );
+    PhyCoubControllerSubscriberPtr getPhyCoubSubsriber();
 
     void setDefaultOptions( ParticleOptions options );
 
   private slots:
     void addParticle();
+
+  protected:
+    friend class PhyAddParticlePhyCoubSubscriber;
 
   private:
     void configureInputs();
@@ -36,6 +42,7 @@ class PhyAddParticleWidget : public QWidget
 
     AddParticleControllerAdapterPtr addParticleControllerAdapter_ = nullptr;
     GetCoubSizeAdapterPtr getCoubSizeAdapter_ = nullptr;
+    PhyAddParticlePhyCoubSubscriberPtr coubControllerSubscriber_ = nullptr;
 
     QHBoxLayout* addParticleLayout_ = nullptr;
 

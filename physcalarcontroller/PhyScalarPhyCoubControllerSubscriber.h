@@ -13,11 +13,12 @@ template< typename ValueType >
 class PhyScalarControllerWidgetBase;
 
 template< typename ValueType >
-class PhyScalarControllerSubscriber : public PhyCoubControllerSubscriberIface
+class PhyScalarPhyCoubControllerSubscriber : public PhyCoubControllerSubscriberIface
 {
   public:
-    PhyScalarControllerSubscriber( PhyScalarControllerWidgetBase< ValueType >* widget );
-    virtual ~PhyScalarControllerSubscriber() override;
+    PhyScalarPhyCoubControllerSubscriber(
+        PhyScalarControllerWidgetBase< ValueType >* widget );
+    virtual ~PhyScalarPhyCoubControllerSubscriber() override;
 
     // Implementation of PhyCoubControllerSubscriberIface
     virtual void onStart() override;
@@ -31,21 +32,25 @@ class PhyScalarControllerSubscriber : public PhyCoubControllerSubscriberIface
 };
 
 template< typename ValueType >
-PhyScalarControllerSubscriber< ValueType >::PhyScalarControllerSubscriber(
+using PhyScalarPhyCoubControllerSubscriberPtr
+    = std::shared_ptr< PhyScalarPhyCoubControllerSubscriber< ValueType > >;
+
+template< typename ValueType >
+PhyScalarPhyCoubControllerSubscriber< ValueType >::PhyScalarPhyCoubControllerSubscriber(
     PhyScalarControllerWidgetBase< ValueType >* widget )
     : widget_( widget )
 {
 }
 
 template< typename ValueType >
-PhyScalarControllerSubscriber< ValueType >::~PhyScalarControllerSubscriber()
+PhyScalarPhyCoubControllerSubscriber< ValueType >::~PhyScalarPhyCoubControllerSubscriber()
 {
     release();
 }
 
 // virtual override
 template< typename ValueType >
-void PhyScalarControllerSubscriber< ValueType >::onStart()
+void PhyScalarPhyCoubControllerSubscriber< ValueType >::onStart()
 {
     std::lock_guard< std::mutex > lockGuard( widgetMutex_ );
     if ( widget_ )
@@ -57,7 +62,7 @@ void PhyScalarControllerSubscriber< ValueType >::onStart()
 
 // virtual override
 template< typename ValueType >
-void PhyScalarControllerSubscriber< ValueType >::onStop()
+void PhyScalarPhyCoubControllerSubscriber< ValueType >::onStop()
 {
     std::lock_guard< std::mutex > lockGuard( widgetMutex_ );
     if ( widget_ )
@@ -68,7 +73,7 @@ void PhyScalarControllerSubscriber< ValueType >::onStop()
 }
 
 template< typename ValueType >
-void PhyScalarControllerSubscriber< ValueType >::release()
+void PhyScalarPhyCoubControllerSubscriber< ValueType >::release()
 {
     std::lock_guard< std::mutex > lockGuard( widgetMutex_ );
     widget_ = nullptr;

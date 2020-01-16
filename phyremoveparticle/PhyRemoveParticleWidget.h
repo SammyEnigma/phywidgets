@@ -9,6 +9,8 @@
 #include <QPushButton>
 
 #include "ParticleRemoveControllerAdapterIface.h"
+#include "PhyRemoveParticlePhyCoubSubscriber.h"
+#include "PhyCoubControllerSubscriberIface.h"
 
 namespace phywidgets
 {
@@ -21,14 +23,19 @@ class PhyRemoveParticleWidget : public QWidget
 
     void setRemoveParticleControllerAdapter(
         ParticleRemoveControllerAdapter particleRemoveControllerAdapter );
+    PhyCoubControllerSubscriberPtr getPhyCoubSubsriber();
 
   private slots:
     void removeParticle();
+
+  protected:
+    friend class PhyRemoveParticlePhyCoubSubscriber;
 
   private:
     void configureInputs();
 
     ParticleRemoveControllerAdapter particleRemoveControllerAdapter_ = nullptr;
+    PhyRemoveParticlePhyCoubSubscriberPtr coubControllerSubscriber_ = nullptr;
 
     QHBoxLayout* layout_ = nullptr;
 
