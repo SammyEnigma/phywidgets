@@ -56,9 +56,9 @@ PhyCoubControllerWidget::~PhyCoubControllerWidget()
 }
 
 void PhyCoubControllerWidget::setPhyCoubController(
-    PhyCoubControllerPtr phyCoubController )
+    PhyCoubControllerWeakPtr phyCoubControllerWeak )
 {
-    phyCoubControllerWeak_ = phyCoubController;
+    phyCoubControllerWeak_ = phyCoubControllerWeak;
     if ( auto phyCoubController = phyCoubControllerWeak_.lock() )
     {
         phyCoubController->subscribe( controllerSubscriber_ );

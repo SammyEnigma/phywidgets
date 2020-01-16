@@ -44,6 +44,7 @@ class PhyCoubController final : public GetParticlesAdapterIface
     std::list< PhyCoubControllerSubscriberWeakPtr > subscribers_;
 };
 
+using PhyCoubControllerWeakPtr = std::weak_ptr< PhyCoubController >;
 using PhyCoubControllerPtr = std::shared_ptr< PhyCoubController >;
 
 } // namespace phywidgets

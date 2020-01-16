@@ -26,7 +26,7 @@ class PhyCoubControllerWidget : public QWidget
     explicit PhyCoubControllerWidget( QWidget* parent = nullptr );
     virtual ~PhyCoubControllerWidget() override;
 
-    void setPhyCoubController( PhyCoubControllerPtr phyCoubController );
+    void setPhyCoubController( PhyCoubControllerWeakPtr phyCoubController );
 
   protected:
     friend class PhyCoubControllerSubscriber;
@@ -47,7 +47,7 @@ class PhyCoubControllerWidget : public QWidget
   private:
     QTimer updateExperimentTimeTimer_;
 
-    std::weak_ptr< PhyCoubController > phyCoubControllerWeak_;
+    PhyCoubControllerWeakPtr phyCoubControllerWeak_;
     std::shared_ptr< PhyCoubControllerSubscriber > controllerSubscriber_ = nullptr;
 
     QVBoxLayout* layout_ = nullptr;
