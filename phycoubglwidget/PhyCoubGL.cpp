@@ -42,6 +42,10 @@ void PhyCoubGL::updateScene()
 void PhyCoubGL::setDrowTrajectoryFlag( bool flag )
 {
     drowTrajectoryFlag_ = flag;
+    if ( !drowTrajectoryFlag_ )
+    {
+        trajectory_.clear();
+    }
 }
 
 bool PhyCoubGL::getDrowTrajectoryFlag() const

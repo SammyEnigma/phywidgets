@@ -42,10 +42,14 @@ INCLUDEPATH += \
   ../phycommon/
 
 SOURCES += \
+    PhyBoolPhyCoubControllerSubscriber.cpp \
+    PhyScalarBoolControllerWidget.cpp \
     PhyScalarDoubleControllerWidget.cpp \
     PhyScalarULongControllerWidget.cpp
 
 HEADERS += \
+    PhyBoolPhyCoubControllerSubscriber.h \
+    PhyScalarBoolControllerWidget.h \
     PhyScalarControllerWidgetBase.h \
     PhyScalarDoubleControllerWidget.h \
     PhyScalarPhyCoubControllerSubscriber.h \
