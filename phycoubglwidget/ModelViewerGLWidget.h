@@ -26,8 +26,9 @@ class ModelViewerGLWidget final
     virtual void updateGlRotation( int xRot, int yRot, int zRot ) override;
 
     void setGetCoubSizeAdapter( GetCoubSizeAdapterWeakPtr getCoubSizeAdapter );
-    void setGetParticleForGLAdapter( GetParticlesAdapterWeakPtr getParticlesForGLAdapter );
-    void setGLRotationController( GLRotationControllerPtr gLRotationController );
+    void setGetParticleForGLAdapter(
+        GetParticlesAdapterWeakPtr getParticlesForGLAdapter );
+    void setGLRotationController( GLRotationControllerWeakPtr gLRotationControllerWeak );
 
     BoolControllerAdapterWeakPtr getTrajectoryControllerAdapter();
     PhyCoubControllerSubscriberWeakPtr getPhyCoubController();
@@ -57,7 +58,7 @@ class ModelViewerGLWidget final
     PhyCoubGLPtr phyCoubGL_;
     TrajectoryScalarControllerAdapterPtr trajectoryControllerAdapter_;
 
-    GLRotationControllerPtr gLRotationController_ = nullptr;
+    GLRotationControllerWeakPtr gLRotationControllerWeak_;
     std::shared_ptr< GLRotationModelAdapter > gLRotationModelAdapter_ = nullptr;
 
     QPoint lastPos_;

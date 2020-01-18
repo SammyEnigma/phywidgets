@@ -42,12 +42,12 @@ void ModelViewerGLWidget::setGetParticleForGLAdapter(
 }
 
 void ModelViewerGLWidget::setGLRotationController(
-    GLRotationControllerPtr gLRotationController )
+    GLRotationControllerWeakPtr gLRotationControllerWeak )
 {
-    gLRotationController_ = gLRotationController;
-    if ( gLRotationController_ )
+    gLRotationControllerWeak_ = gLRotationControllerWeak;
+    if ( auto gLRotationController = gLRotationControllerWeak_.lock() )
     {
-        gLRotationController_->subscribeForUpdates( gLRotationModelAdapter_ );
+        gLRotationController->subscribeForUpdates( gLRotationModelAdapter_ );
     }
 }
 
@@ -63,25 +63,25 @@ PhyCoubControllerSubscriberWeakPtr ModelViewerGLWidget::getPhyCoubController()
 
 void ModelViewerGLWidget::setXRotation( int angle )
 {
-    if ( gLRotationController_ )
+    if ( auto gLRotationController = gLRotationControllerWeak_.lock() )
     {
-        gLRotationController_->updateRotationX( angle );
+        gLRotationController->updateRotationX( angle );
     }
 }
 
 void ModelViewerGLWidget::setYRotation( int angle )
 {
-    if ( gLRotationController_ )
+    if ( auto gLRotationController = gLRotationControllerWeak_.lock() )
     {
-        gLRotationController_->updateRotationY( angle );
+        gLRotationController->updateRotationY( angle );
     }
 }
 
 void ModelViewerGLWidget::setZRotation( int angle )
 {
-    if ( gLRotationController_ )
+    if ( auto gLRotationController = gLRotationControllerWeak_.lock() )
     {
-        gLRotationController_->updateRotationZ( angle );
+        gLRotationController->updateRotationZ( angle );
     }
 }
 

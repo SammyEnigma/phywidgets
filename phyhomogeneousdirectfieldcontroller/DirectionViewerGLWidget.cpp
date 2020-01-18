@@ -34,12 +34,12 @@ void DirectionViewerGLWidget::updateGlRotation( int xRot, int yRot, int zRot )
 }
 
 void DirectionViewerGLWidget::setGLRotattionController(
-    GLRotationControllerPtr gLRotationController )
+    GLRotationControllerWeakPtr gLRotationControllerWeak )
 {
-    gLRotationController_ = gLRotationController;
-    if ( gLRotationController_ )
+    gLRotationControllerWeak_ = gLRotationControllerWeak;
+    if ( auto gLRotationController = gLRotationControllerWeak_.lock() )
     {
-        gLRotationController_->subscribeForUpdates( gLRotationDirectionViewAdapter_ );
+        gLRotationController->subscribeForUpdates( gLRotationDirectionViewAdapter_ );
     }
 }
 
@@ -52,25 +52,25 @@ void DirectionViewerGLWidget::setDirectionController(
 
 void DirectionViewerGLWidget::setXRotation( int angle )
 {
-    if ( gLRotationController_ )
+    if ( auto gLRotationController = gLRotationControllerWeak_.lock() )
     {
-        gLRotationController_->updateRotationX( angle );
+        gLRotationController->updateRotationX( angle );
     }
 }
 
 void DirectionViewerGLWidget::setYRotation( int angle )
 {
-    if ( gLRotationController_ )
+    if ( auto gLRotationController = gLRotationControllerWeak_.lock() )
     {
-        gLRotationController_->updateRotationY( angle );
+        gLRotationController->updateRotationY( angle );
     }
 }
 
 void DirectionViewerGLWidget::setZRotation( int angle )
 {
-    if ( gLRotationController_ )
+    if ( auto gLRotationController = gLRotationControllerWeak_.lock() )
     {
-        gLRotationController_->updateRotationZ( angle );
+        gLRotationController->updateRotationZ( angle );
     }
 }
 

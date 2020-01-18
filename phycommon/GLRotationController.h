@@ -32,6 +32,7 @@ class GLRotationController
     std::list< std::weak_ptr< GLRotationIface > > glSubscribers_;
 };
 
+using GLRotationControllerWeakPtr = std::weak_ptr< GLRotationController >;
 using GLRotationControllerPtr = std::shared_ptr< GLRotationController >;
 
 } // namespace phywidgets

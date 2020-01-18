@@ -23,7 +23,7 @@ class DirectionViewerGLWidget
     // Implementation of GLRotationIface
     virtual void updateGlRotation( int xRot, int yRot, int zRot ) override;
 
-    void setGLRotattionController( GLRotationControllerPtr gLRotationController );
+    void setGLRotattionController( GLRotationControllerWeakPtr gLRotationControllerWeak );
     void setDirectionController( VectorControllerAdapterWeakPtr directionControllerWeak );
 
   public slots:
@@ -47,7 +47,7 @@ class DirectionViewerGLWidget
 
     void drowSphere( const phycoub::Vector& coordinate, double radius );
 
-    GLRotationControllerPtr gLRotationController_ = nullptr;
+    GLRotationControllerWeakPtr gLRotationControllerWeak_;
     VectorControllerAdapterWeakPtr directionControllerWeak_;
     std::shared_ptr< GLRotationDirectionViewAdapter > gLRotationDirectionViewAdapter_
         = nullptr;

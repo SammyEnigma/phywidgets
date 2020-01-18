@@ -16,7 +16,7 @@ class PhyHomogeneousDirectFieldControllerWidget : public QWidget
   public:
     explicit PhyHomogeneousDirectFieldControllerWidget( QWidget* parent = nullptr );
 
-    void setGLRotattionController( GLRotationControllerPtr gLRotationController );
+    void setGLRotattionController( GLRotationControllerWeakPtr gLRotationControllerWeak );
 
     void setDirectionController( VectorControllerAdapterWeakPtr directionControllerWeak );
     void setScalarController( DoubleControllerAdapterWeakPtr scalarControllerWeak );

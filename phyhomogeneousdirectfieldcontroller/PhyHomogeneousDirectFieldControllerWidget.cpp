@@ -35,10 +35,10 @@ PhyHomogeneousDirectFieldControllerWidget::PhyHomogeneousDirectFieldControllerWi
 }
 
 void PhyHomogeneousDirectFieldControllerWidget::setGLRotattionController(
-    GLRotationControllerPtr gLRotationController )
+    GLRotationControllerWeakPtr gLRotationControllerWeak )
 
 {
-    directionViewerGLWidget_->setGLRotattionController( gLRotationController );
+    directionViewerGLWidget_->setGLRotattionController( gLRotationControllerWeak );
 }
 
 void PhyHomogeneousDirectFieldControllerWidget::setDirectionController(
