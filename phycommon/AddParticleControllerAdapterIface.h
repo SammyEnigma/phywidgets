@@ -17,7 +17,8 @@ class AddParticleControllerAdapterIface
     virtual ~AddParticleControllerAdapterIface() = default;
 
     virtual void addParticle( const Vector& coordinate, const Vector& speed,
-        const ParticleOptions& particleOptions );
+        const ParticleOptions& particleOptions )
+        = 0;
 };
 
 using AddParticleControllerAdapterWeakPtr

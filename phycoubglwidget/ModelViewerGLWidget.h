@@ -31,7 +31,7 @@ class ModelViewerGLWidget final
     void setGLRotationController( GLRotationControllerWeakPtr gLRotationControllerWeak );
 
     BoolControllerAdapterWeakPtr getTrajectoryControllerAdapter();
-    PhyCoubControllerSubscriberWeakPtr getPhyCoubController();
+    PhyCoubControllerSubscriberWeakPtr getPhyCoubSubscriber();
 
   public slots:
     void setXRotation( int angle );

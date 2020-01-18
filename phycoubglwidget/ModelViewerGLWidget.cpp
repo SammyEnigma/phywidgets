@@ -56,7 +56,7 @@ BoolControllerAdapterWeakPtr ModelViewerGLWidget::getTrajectoryControllerAdapter
     return trajectoryControllerAdapter_;
 }
 
-PhyCoubControllerSubscriberWeakPtr ModelViewerGLWidget::getPhyCoubController()
+PhyCoubControllerSubscriberWeakPtr ModelViewerGLWidget::getPhyCoubSubscriber()
 {
     return phyCoubGL_;
 }

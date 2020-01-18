@@ -17,11 +17,19 @@ PhyCoubController::~PhyCoubController()
 phycoub::ParticleGroupList PhyCoubController::getParticles() const
 {
     std::lock_guard< std::mutex > lockGuard( particlesForGLMutex_ );
+    {
+        std::lock_guard< std::mutex > lockGuardProcess( processMutex_ );
+        if ( !isCalculating_ )
+        {
+            particlesForGL_ = coub_->getParticleGroupList().deepCopy();
+        }
+    }
     return particlesForGL_;
 }
 
 void PhyCoubController::startCalculation()
 {
+    std::lock_guard< std::mutex > lockGuard( processMutex_ );
     if ( !isCalculating_ )
     {
         isCalculating_ = true;
@@ -47,6 +55,7 @@ void PhyCoubController::startCalculation()
 
 void PhyCoubController::stopCalculation()
 {
+    std::lock_guard< std::mutex > lockGuard( processMutex_ );
     if ( isCalculating_ )
     {
         isCalculating_ = false;
@@ -63,6 +72,7 @@ void PhyCoubController::stopCalculation()
 
 void PhyCoubController::calculateOnce()
 {
+    std::lock_guard< std::mutex > lockGuard( processMutex_ );
     if ( !isCalculating_ )
     {
         coub_->phyCoub();

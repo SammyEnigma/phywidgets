@@ -62,6 +62,8 @@ PhyCoubControllerSubscriberWeakPtr PhyAddParticleWidget::getPhyCoubSubsriber()
 void PhyAddParticleWidget::setDefaultOptions( ParticleOptions options )
 {
     defaultParticleOptions_ = options;
+    weightParticleEdit_->setText( QString::number( defaultParticleOptions_.m_ ) );
+    chargeParticleEdit_->setText( QString::number( defaultParticleOptions_.q_ ) );
 }
 
 void PhyAddParticleWidget::addParticle()
@@ -157,9 +159,6 @@ void PhyAddParticleWidget::configureInputs()
         = new QDoubleValidator{ 0, 3'000'000'000., 2, this };
     weightParticleEdit_->setValidator( particleOptionsValidator );
     chargeParticleEdit_->setValidator( particleOptionsValidator );
-
-    weightParticleEdit_->setText( QString::number( defaultParticleOptions_.m_ ) );
-    chargeParticleEdit_->setText( QString::number( defaultParticleOptions_.q_ ) );
 
     addParticleButton_->setText( tr( "Добавить" ) );
 

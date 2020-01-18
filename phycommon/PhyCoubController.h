@@ -34,7 +34,9 @@ class PhyCoubController final : public GetParticlesAdapterIface
     void subscribe( PhyCoubControllerSubscriberWeakPtr subscriber );
 
   private:
-    phycoub::ParticleGroupList particlesForGL_;
+    mutable std::mutex processMutex_;
+
+    mutable phycoub::ParticleGroupList particlesForGL_;
     mutable std::mutex particlesForGLMutex_;
 
     bool isCalculating_ = false;
