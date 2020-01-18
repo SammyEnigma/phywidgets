@@ -45,7 +45,9 @@ SOURCES += \
     PhyBoolPhyCoubControllerSubscriber.cpp \
     PhyScalarBoolControllerWidget.cpp \
     PhyScalarDoubleControllerWidget.cpp \
-    PhyScalarULongControllerWidget.cpp
+    PhyScalarULongControllerWidget.cpp \
+    PhyScalarVectorControllerWidget.cpp \
+    PhyVectorPhyCoubControllerSubscriber.cpp
 
 HEADERS += \
     PhyBoolPhyCoubControllerSubscriber.h \
@@ -53,7 +55,9 @@ HEADERS += \
     PhyScalarControllerWidgetBase.h \
     PhyScalarDoubleControllerWidget.h \
     PhyScalarPhyCoubControllerSubscriber.h \
-    PhyScalarULongControllerWidget.h
+    PhyScalarULongControllerWidget.h \
+    PhyScalarVectorControllerWidget.h \
+    PhyVectorPhyCoubControllerSubscriber.h
 
 # Default rules for deployment.
 unix {
