@@ -42,15 +42,18 @@ function getQtModules {
 }
 
 function writeSomthingToVariable {
-    #$1 filepath
+    #$1 folder
     #$2 variablename
     #$3 somthing CMakeLists
 
+    local projectName=$(basename $1)
+    local qmakePath=$1/$projectName.qmake
+
     for somthing in $3
     do
-        echo "$2 += ../phywidgets/$somthing" >> $1
+        echo "$2 += ../$projectName/${somthing#"$1/"}" >> $qmakePath
     done
-    echo >> $1
+    echo >> $qmakePath
 }
 
 function writeWidgetsSpecific {
@@ -62,7 +65,8 @@ function writeWidgetsSpecific {
 function generateQMake {
     #$1 folder
 
-    local qmakePath=$1/widgets.qmake
+    local projectName=$(basename $1)
+    local qmakePath=$1/$projectName.qmake
 
     rm -r $qmakePath 2> /dev/null
 
@@ -72,19 +76,19 @@ function generateQMake {
     echo -e "QT += $qtModules\n" >> $qmakePath
 
     getIncludePaths $1 #return includePaths
-    writeSomthingToVariable $qmakePath INCLUDEPATH "$includePaths"
+    writeSomthingToVariable $1 INCLUDEPATH "$includePaths"
 
     getHeaderFiles $1 #return headerFiles
-    writeSomthingToVariable $qmakePath HEADERS "$headerFiles"
+    writeSomthingToVariable $1 HEADERS "$headerFiles"
 
     getCppFiles $1 #return cppFiles
-    writeSomthingToVariable $qmakePath SOURCES "$cppFiles"
+    writeSomthingToVariable $1 SOURCES "$cppFiles"
 
     getDistFiles $1 #return distFiles
-    writeSomthingToVariable $qmakePath DISTFILES "$distFiles"
+    writeSomthingToVariable $1 DISTFILES "$distFiles"
 
     getSubdirs $1 #return subdirs
-    writeSomthingToVariable $qmakePath SUBDIRS "$subdirs"
+    writeSomthingToVariable $1 SUBDIRS "$subdirs"
 }
 
-generateQMake .
+generateQMake $PWD
