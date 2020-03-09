@@ -2,7 +2,13 @@
 
 #include <QOpenGLFunctions>
 #include <QGL>
-#include <GL/glu.h>
+
+#if defined( WIN32 )
+#    include <GL/glu.h>
+#elif defined( DARWIN )
+#    include <OpenGL/glu.h>
+#endif
+
 #include <unordered_set>
 
 #include "ParticleGroup.h"
