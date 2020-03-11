@@ -50,8 +50,8 @@ void PhyViewParticleTableWidget::updateParticleTable()
                     static_cast< int >( particleGroupList.getParticleCount() ) );
 
                 int rowIndex = 0;
-                for ( const ParticlePtr& particle : particleGroupList )
-                {
+                particleGroupList.forEachParticle( [this, &rowIndex, coubSize](
+                                                       ParticlePtr particle ) {
                     tableWidget_->setItem( rowIndex, 0,
                         new QTableWidgetItem( QString::number( particle->getId() ) ) );
 
@@ -81,7 +81,7 @@ void PhyViewParticleTableWidget::updateParticleTable()
                         new QTableWidgetItem( QString::number( options.q_ ) ) );
 
                     ++rowIndex;
-                }
+                } );
             }
         }
 }
