@@ -11,7 +11,7 @@
 
 #include <unordered_set>
 
-#include "ParticleGroup.h"
+#include "ParticleGroupList.h"
 
 namespace phywidgets
 {
