@@ -21,7 +21,7 @@ phycoub::ParticleGroupList PhyCoubController::getParticles() const
         std::lock_guard< std::mutex > lockGuardProcess( processMutex_ );
         if ( !isCalculating_ )
         {
-            particlesForGL_ = coub_->getParticleGroupList().deepCopy();
+            particlesForGL_ = coub_->getUniqParticleGroupList().deepCopy();
         }
     }
     return particlesForGL_;
@@ -39,7 +39,7 @@ void PhyCoubController::startCalculation()
                 coub_->phyCoub();
                 {
                     std::lock_guard< std::mutex > lockGuard( particlesForGLMutex_ );
-                    particlesForGL_ = coub_->getParticleGroupList().deepCopy();
+                    particlesForGL_ = coub_->getUniqParticleGroupList().deepCopy();
                 }
             }
         } );

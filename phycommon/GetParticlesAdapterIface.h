@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "ParticleGroup.h"
+#include "ParticleGroupList.h"
 
 namespace phywidgets
 {

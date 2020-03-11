@@ -11,7 +11,7 @@
 
 #include <unordered_set>
 
-#include "ParticleGroup.h"
+#include "ParticleGroupList.h"
 
 namespace phywidgets
 {
@@ -96,36 +96,34 @@ void PhyCoubGL::drowParticlesWithColorsByGroup(
     }
 
     size_t colorIndex = 0;
-    for ( ParticleGroupList::GroupConstIterator groupIterator
-          = particleGroupList.beginGroup();
-          groupIterator != particleGroupList.endGroup(); ++groupIterator )
-    {
-        gLWidget_->qglColor( colorsForGroup_[ colorIndex ] );
+    particleGroupList.forEachGroup(
+        [this, &trajectoryParticleIdList, &colorIndex]( ParticleGroupPtr group ) {
+            gLWidget_->qglColor( colorsForGroup_[ colorIndex ] );
 
-        for ( ParticlePtr particle : **groupIterator )
-        {
-            const Vector& particleCoordinate = particle->getCoordinate();
-            const Vector mashtabedOriginCoordinate
-                = mashtabVector( particleCoordinate, coubSize_ ) - origin_;
-            drowSphere( mashtabedOriginCoordinate, 0.01 );
-
-            if ( drowTrajectoryFlag_ )
+            for ( ParticlePtr particle : *group )
             {
-                trajectoryParticleIdList.extract( particle->getId() );
+                const Vector& particleCoordinate = particle->getCoordinate();
+                const Vector mashtabedOriginCoordinate
+                    = mashtabVector( particleCoordinate, coubSize_ ) - origin_;
+                drowSphere( mashtabedOriginCoordinate, 0.01 );
 
-                if ( updateTrajectoryFlag_ )
+                if ( drowTrajectoryFlag_ )
                 {
-                    auto& trajectoryVector = trajectory_[ particle->getId() ];
-                    trajectoryVector.push_back( mashtabedOriginCoordinate );
-                    if ( trajectoryVector.size() > 100 )
+                    trajectoryParticleIdList.extract( particle->getId() );
+
+                    if ( updateTrajectoryFlag_ )
                     {
-                        trajectoryVector.pop_front();
+                        auto& trajectoryVector = trajectory_[ particle->getId() ];
+                        trajectoryVector.push_back( mashtabedOriginCoordinate );
+                        if ( trajectoryVector.size() > 100 )
+                        {
+                            trajectoryVector.pop_front();
+                        }
                     }
                 }
             }
-        }
-        ++colorIndex;
-    }
+            ++colorIndex;
+        } );
 
     if ( drowTrajectoryFlag_ )
     {

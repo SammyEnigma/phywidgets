@@ -13,7 +13,7 @@
 #include "GetParticlesAdapterIface.h"
 #include "PhyCoubControllerSubscriberIface.h"
 #include "Vector.h"
-#include "ParticleGroup.h"
+#include "ParticleGroupList.h"
 #include "HasId.h"
 
 namespace phywidgets
