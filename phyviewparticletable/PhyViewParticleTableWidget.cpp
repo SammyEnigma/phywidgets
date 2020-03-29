@@ -43,7 +43,7 @@ void PhyViewParticleTableWidget::updateParticleTable()
             {
                 const Vector& coubSize = getCoubSizeAdapter->getCoubSize();
 
-                const ParticleGroupList& particleGroupList
+                const ParticleGroupList particleGroupList
                     = getParticlesAdapter->getParticles();
 
                 tableWidget_->setRowCount(
