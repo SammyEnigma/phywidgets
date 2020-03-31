@@ -1,3 +1,6 @@
+
+include(../../phycoub/phycoub.widgets.qmake)
+
 QT += widgets
 
 TEMPLATE = lib
@@ -15,28 +18,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-INCLUDEPATH += \
-    ../../phycoub/borderconditions/ \
-    ../../phycoub/borderevents/ \
-    ../../phycoub/borderfieldconditions/ \
-    ../../phycoub/common/ \
-    ../../phycoub/calculationmodels/ \
-    ../../phycoub/fieldfunctions/ \
-    ../../phycoub/interworkingfunctions/ \
-    ../../phycoub/otherobjects/ \
-    ../../phycoub/lifetimecontrollers/ \
-    ../../phycoub/particlesources/ \
-    ../../phycoub/phyobjects/particlefigurematrix/ \
-    ../../phycoub/phycoubs/ \
-    ../../phycoub/phymeasurement/ \
-    ../../phycoub/phyobjects/ \
-    ../../phycoub/phyobjects/fieldcreators/ \
-    ../../phycoub/phyobjects/intercommunications/ \
-    ../../phycoub/specialmodellingfunctions/ \
-    ../../phycoub/src/ \
-    ../../phycoub/shapes/ \
-    ../../phycoub/types/
 
 INCLUDEPATH += \
   ../phycommon/
