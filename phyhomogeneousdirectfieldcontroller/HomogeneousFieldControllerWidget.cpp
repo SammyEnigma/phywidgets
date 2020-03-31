@@ -11,7 +11,7 @@ HomogeneousFieldControllerWidget::HomogeneousFieldControllerWidget( QWidget* par
     , scalarLayout_( new QVBoxLayout( this ) )
     , scalarLabel_( new QLabel( this ) )
     , scalarValueEdit_( new QLineEdit( this ) )
-    , directionControllerWidget_( new DirectionControllerWidget( this ) )
+    , directionControllerWidget_( new PhyDirectionControllerWidget( this ) )
 {
     configureScalarVaule();
 

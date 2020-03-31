@@ -4,14 +4,14 @@ function getHeaderFiles {
     #$1 folder
     #return headerFiles
 
-    headerFiles=$(find $1 -type f | grep '\.h')
+    headerFiles=$(find $1 -type f | grep '\.h' | grep -v 'build-')
 }
 
 function getCppFiles {
     #$1 folder
     #return cppFiles
 
-    cppFiles=$(find $1 -type f | grep '\.cpp')
+    cppFiles=$(find $1 -type f | grep '\.cpp' | grep -v 'build-')
 }
 
 function getDistFiles {
@@ -25,14 +25,14 @@ function getIncludePaths {
     #$1 folder
     #return includePaths
 
-    includePaths=$(find $1 -type d -maxdepth 1 | grep -v '\.git' | tail -n +2)
+    includePaths=$(find $1 -type d -maxdepth 1 | grep -v '\.git' | grep -v 'build-' | tail -n +2)
 }
 
 function getSubdirs {
     #$1 folder
     #reurn subdirs
 
-    subdirs=$(find $1 -type f | grep '\.pro' | grep -v '\.user')
+    subdirs=$(find $1 -type f | grep '\.pro' | grep -v '\.user' | grep -v 'build-')
 }
 
 function getQtModules {

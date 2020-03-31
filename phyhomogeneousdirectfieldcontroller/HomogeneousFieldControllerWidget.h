@@ -6,7 +6,7 @@
 #include <QGroupBox>
 
 #include "ValueControllerAdapterIface.h"
-#include "DirectionControllerWidget.h"
+#include "PhyDirectionControllerWidget.h"
 
 namespace phywidgets
 {
@@ -36,7 +36,7 @@ class HomogeneousFieldControllerWidget : public QWidget
     QVBoxLayout* scalarLayout_ = nullptr;
     QLabel* scalarLabel_ = nullptr;
     QLineEdit* scalarValueEdit_ = nullptr;
-    DirectionControllerWidget* directionControllerWidget_ = nullptr;
+    PhyDirectionControllerWidget* directionControllerWidget_ = nullptr;
 
     VectorControllerAdapterWeakPtr directionControllerWeak_;
     DoubleControllerAdapterWeakPtr scalarControllerWeak_;

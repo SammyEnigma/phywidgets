@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 
-#include "DirectionViewerGLWidget.h"
+#include "PhyDirectionGLWidget.h"
 #include "HomogeneousFieldControllerWidget.h"
 
 namespace phywidgets
@@ -33,7 +33,7 @@ class PhyHomogeneousDirectFieldControllerWidget : public QWidget
     QHBoxLayout* aligmentGlLayout_ = nullptr;
     QGroupBox* alignmentGl_ = nullptr;
 
-    DirectionViewerGLWidget* directionViewerGLWidget_ = nullptr;
+    PhyDirectionGLWidget* directionViewerGLWidget_ = nullptr;
     HomogeneousFieldControllerWidget* homogeneousFieldControllerWidget_ = nullptr;
 };
 

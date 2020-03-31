@@ -11,7 +11,7 @@ PhyHomogeneousDirectFieldControllerWidget::PhyHomogeneousDirectFieldControllerWi
     , alignmentGroup_( new QGroupBox( this ) )
     , aligmentGlLayout_( new QHBoxLayout( this ) )
     , alignmentGl_( new QGroupBox( tr( "Вектор поля" ), this ) )
-    , directionViewerGLWidget_( new DirectionViewerGLWidget( this ) )
+    , directionViewerGLWidget_( new PhyDirectionGLWidget( this ) )
     , homogeneousFieldControllerWidget_( new HomogeneousFieldControllerWidget( this ) )
 {
 
