@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Vector.h"
+#include "ParticleOptions.h"
 
 namespace phywidgets
 {
@@ -27,6 +28,9 @@ using LongControllerAdapterWeakPtr = std::weak_ptr< ValueControllerAdapterIface<
 
 using VectorControllerAdapterWeakPtr
     = std::weak_ptr< ValueControllerAdapterIface< phycoub::Vector > >;
+
+using ParticleOptionsControllerAdapterWeakPtr
+    = std::weak_ptr< ValueControllerAdapterIface< phycoub::ParticleOptions > >;
 
 template< typename ValueType, typename Type, ValueType ( Type::*getValueMethod )() const,
     void ( Type::*setValueMethod )( ValueType ) >
