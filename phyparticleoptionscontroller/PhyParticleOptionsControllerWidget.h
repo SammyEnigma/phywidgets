@@ -45,7 +45,7 @@ class PhyParticleOptionsControllerWidget : public QWidget
     QLabel* chargeLabel_ = nullptr;
     QVBoxLayout* chargeLayout_ = nullptr;
 
-    QPushButton* applyChanges_ = nullptr;
+    QPushButton* applyChangesButton_ = nullptr;
 };
 
 } // namespace phywidgets

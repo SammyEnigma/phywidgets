@@ -15,10 +15,13 @@ PhyParticleOptionsControllerWidget::PhyParticleOptionsControllerWidget( QWidget*
     , chargeLineEdit_( new QLineEdit( this ) )
     , chargeLabel_( new QLabel( this ) )
     , chargeLayout_( new QVBoxLayout( this ) )
-    , applyChanges_( new QPushButton( this ) )
+    , applyChangesButton_( new QPushButton( this ) )
 {
     config();
     widget->setLayout( widgetLayout_ );
+
+    QObject::connect(
+        applyChangesButton_, SIGNAL( clicked() ), this, SLOT( onApplyChangeClicked() ) );
 }
 
 void PhyParticleOptionsControllerWidget::setParticleOptionsControllerAdapter(
@@ -81,8 +84,8 @@ void PhyParticleOptionsControllerWidget::config()
     weightLineEdit_->setText( "0" );
     chargeLineEdit_->setText( "0" );
 
-    applyChanges_->setText( tr( "Установить" ) );
-    mainVerticalLayout_->addWidget( applyChanges_ );
+    applyChangesButton_->setText( tr( "Установить" ) );
+    mainVerticalLayout_->addWidget( applyChangesButton_ );
 
     const QDoubleValidator* optionValidator
         = new QDoubleValidator{ -3'000'000'000., 3'000'000'000., 2, this };
